@@ -1,0 +1,14 @@
+group 'edu.stonybrook.cs.netsys'
+version '0.9'
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.freemarker:freemarker:2.3.25-incubating'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
