@@ -1,4 +1,4 @@
-package edu.stonybrook.cs.netsys.appbuilder.appInfo;
+package edu.stonybrook.cs.netsys.appbuilder.data;
 
 /**
  * Created by qqcao on 11/24/16Thursday.

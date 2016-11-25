@@ -11,15 +11,14 @@
                  android:paddingRight="8.0dip">
 
         <TextView
-                android:id="@android:id/text1"
+                android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
                 android:duplicateParentState="true"
                 android:ellipsize="end"
-                android:gravity="center|start"
+                android:gravity="center"
                 android:maxLines="1"
-                android:text="Recently Played"
                 android:textColor="#ffffffff"
                 android:textSize="18.0sp" />
     </FrameLayout>

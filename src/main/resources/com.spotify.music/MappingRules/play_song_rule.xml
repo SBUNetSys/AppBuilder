@@ -21,15 +21,15 @@
     for image value, the location is under Resources folder
     -->
     <Title from="com.spotify.music:id/title">
-        <text>The Ambient White Noise of Nature</text>
+        <text>Song title</text>
     </Title>
     <Description from="com.spotify.music:id/artistAndAlbum">
-        <text>Quiet Flames in the Dark</text>
+        <text>Album artist</text>
     </Description>
     <Icon from="com.spotify.music:id/btn_play">
-        <image>ic_media_play.png</image>
+        <image>btn_play.png</image>
     </Icon>
     <Background from="com.spotify.music:id/image">
-        <image>song.png</image>
+        <image>bg_placeholder.png</image>
     </Background>
 </Card>

@@ -15,7 +15,7 @@
                 android:id="@+id/thumbnail"
                 android:layout_width="30.0dip"
                 android:layout_height="30.0dip"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"  />
     </FrameLayout>
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:paddingRight="9.0dip">
 
         <TextView
-                android:id="@android:id/text1"
+                android:id="@+id/item_text1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:duplicateParentState="true"
@@ -35,10 +35,10 @@
                 android:gravity="center|start"
                 android:textColor="#ffffffff"
                 android:textSize="14.0sp"
-                android:maxLines="1"/>
+                android:maxLines="1" />
 
         <TextView
-                android:id="@android:id/text2"
+                android:id="@+id/item_text2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:duplicateParentState="true"
@@ -46,6 +46,6 @@
                 android:gravity="center|start"
                 android:textColor="#ffadaeb3"
                 android:textSize="10.0sp"
-                android:maxLines="1"/>
+                android:maxLines="1" />
     </LinearLayout>
 </LinearLayout>
