@@ -10,6 +10,7 @@ package edu.stonybrook.cs.netsys.appbuilder.data;
 public class RuleInfo {
     private String wearViewId;
     private String phoneViewId;
+    private boolean isListView;
     private String textInfo;
     private String imageInfo;
 
@@ -55,11 +56,20 @@ public class RuleInfo {
         this.imageInfo = imageInfo;
     }
 
+    public boolean isListView() {
+        return isListView;
+    }
+
+    public void setListView(boolean listView) {
+        isListView = listView;
+    }
+
     @Override
     public String toString() {
         return "RuleInfo{" +
                 "wearViewId='" + wearViewId + '\'' +
                 ", phoneViewId='" + phoneViewId + '\'' +
+                ", isListView=" + isListView +
                 ", textInfo='" + textInfo + '\'' +
                 ", imageInfo='" + imageInfo + '\'' +
                 '}';

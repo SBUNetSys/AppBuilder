@@ -1,6 +1,5 @@
 package edu.stonybrook.cs.netsys.appbuilder.utils;
 
-import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
 import org.apache.commons.io.FileUtils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -15,8 +14,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRINGS_RES_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_ATTR_NAME;
+import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
+
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ATTR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RESOURCES_TAG;
 import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_TAG;
 
 /**
@@ -69,8 +70,12 @@ public class XmlUtil {
                     info.setWearViewId(to);
                 }
 
-                parser.nextTag();
                 String name = parser.getName();
+                if (name.endsWith("ListView") || name.endsWith("RecyclerView")) {
+                    info.setListView(true);
+                }
+                parser.nextTag();
+                name = parser.getName();
                 if (TEXT_TAG.equals(name)) {
                     String text = readInfo(parser, TEXT_TAG);
 //                    System.out.println("text:" + text);
@@ -82,7 +87,6 @@ public class XmlUtil {
 //                    System.out.println("image:" + image);
                     info.setImageInfo(image);
                 }
-
 
 //                System.out.println("info: " + info);
                 nodes.add(info);
@@ -129,16 +133,16 @@ public class XmlUtil {
             serializer.setOutput(writer);
             serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
             serializer.startDocument("UTF-8", true);
-            serializer.startTag(null, STRINGS_RES_TAG);
+            serializer.startTag(null, RESOURCES_TAG);
             Set<String> keySet = stringMap.keySet();
-            for (String stringName :keySet ) {
+            for (String stringName : keySet) {
                 String stringValue = stringMap.get(stringName);
-                serializer.startTag(null,STRING_TAG);
-                serializer.attribute(null, STRING_ATTR_NAME, stringName);
+                serializer.startTag(null, STRING_TAG);
+                serializer.attribute(null, ATTR_NAME, stringName);
                 serializer.text(stringValue);
                 serializer.endTag(null, STRING_TAG);
             }
-            serializer.endTag(null, STRINGS_RES_TAG);
+            serializer.endTag(null, RESOURCES_TAG);
             serializer.endDocument();
 
         } catch (XmlPullParserException | IOException e) {

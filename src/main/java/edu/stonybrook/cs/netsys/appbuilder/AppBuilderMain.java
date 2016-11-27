@@ -1,29 +1,100 @@
 package edu.stonybrook.cs.netsys.appbuilder;
 
-import edu.stonybrook.cs.netsys.appbuilder.data.Info;
-import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
-import edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-import javafx.util.Pair;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlSerializer;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import edu.stonybrook.cs.netsys.appbuilder.data.App;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.*;
+import edu.stonybrook.cs.netsys.appbuilder.data.App;
+import edu.stonybrook.cs.netsys.appbuilder.data.Info;
+import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
+import edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil;
+
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ACTIVITY_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.APP_NAME_TEXT;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.APP_TAG_IN_TEMPLATE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAYS_FILE_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAY_PREFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAY_TAG;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ATTR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.BUILD_GRADLE_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.CODE_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.CONFIG_DIR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.DRAWABLE_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.DRAWABLE_PREFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.IC_LAUNCHER;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_ATTR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_PREFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_VALUE_PREFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.IMAGE_ATTR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.INTEGER_ARRAY_TAG;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ITEM_LAYOUTS_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ITEM_TAG;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAUNCHER_ICON_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUTS_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_PREFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_SUFFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LIST_SUFFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.MANIFEST_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.MANIFEST_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.OUTPUT_DIR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_ID_SUFFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_ITEM_VIEW_ID_ARRAY_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_VIEW_IDS_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_VIEW_ID_ARRAY_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PREFS_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PREF_SUFFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RESOURCES_TAG;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RES_DIR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RULE_DIR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RULE_SUFFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRINGS_FILE_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_ARRAY_TAG;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_PREFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.TEMPLATE_FOLDER_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.TEXT_ATTR_NAME;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.UIWEAR_ACTIVITY_LAYOUT_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.UIWEAR_DEFAULT_ICON_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.VALUES_PATH;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_ID_SUFFIX;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_ITEM_VIEW_ID_ARRAY_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_VIEW_ID_ARRAY_VALUE;
 import static edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil.serializeMapToFile;
 
 /**
@@ -55,12 +126,28 @@ import static edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil.serializeMapToFi
  */
 public class AppBuilderMain {
     private static final boolean isDebug = true;
-    private static Configuration configuration;
     private static final String unzippedFileDest = "build/temp/";
     private static final String[] TEMPLATES = new String[]{MANIFEST_NAME, BUILD_GRADLE_NAME, ACTIVITY_NAME};
-
+    private static Configuration configuration;
     private static HashMap<String, String> stringMap = new HashMap<>();
     private static HashMap<String, Info> idInfoMap = new HashMap<>();
+
+    private static ArrayList<String> prefs = new ArrayList<>();
+
+    private static ArrayList<String> layouts = new ArrayList<>();
+    private static ArrayList<String> wearViewIdArray = new ArrayList<>();
+    private static ArrayList<String> phoneViewIdArray = new ArrayList<>();
+    private static HashMap<String, ArrayList<String>> wearViewIdIndexMap = new HashMap<>();
+    private static HashMap<String, ArrayList<String>> phoneViewIdIndexMap = new HashMap<>();
+
+    private static ArrayList<String> phoneItemViewIds = new ArrayList<>();
+
+    private static ArrayList<String> itemLayouts = new ArrayList<>();
+    private static ArrayList<String> wearItemViewIdArray = new ArrayList<>();
+    private static ArrayList<String> phoneItemViewIdArray = new ArrayList<>();
+    private static HashMap<String, ArrayList<String>> wearItemViewIdIndexMap = new HashMap<>();
+    private static HashMap<String, ArrayList<String>> phoneItemViewIdIndexMap = new HashMap<>();
+
 
     static {
         try {
@@ -77,11 +164,13 @@ public class AppBuilderMain {
         String fileName = "com.spotify.music.zip";
         String pkgName = FilenameUtils.getBaseName(fileName);
         if (isDebug) {
-            System.out.println("pkgName:\n" + pkgName);
+            System.out.println("pkgName: " + pkgName);
+            System.out.println();
         }
         String appOutPath = unzippedFileDest + pkgName + File.separator + OUTPUT_DIR_NAME;
         if (isDebug) {
-            System.out.println("appOutPath:\n" + appOutPath);
+            System.out.println("appOutPath: " + appOutPath);
+            System.out.println();
         }
         // extract zip file to temp folder
         try {
@@ -97,7 +186,8 @@ public class AppBuilderMain {
         String appName = FileUtils.readFileToString(new File(appNameFilePath),
                 Charset.defaultCharset());
         if (isDebug) {
-            System.out.println("appName:\n" + appName);
+            System.out.println("appName: " + appName);
+            System.out.println();
         }
         stringMap.put("app_name", appName);
         // step 2, start parsing below code starts here
@@ -159,7 +249,8 @@ public class AppBuilderMain {
 
 
         // process mapping rules and layout xml to set string values and drawable resources
-        File mappingRuleDir = new File(Paths.get(unzippedFileDest, pkgName, RULE_DIR_NAME).toString());
+        File mappingRuleDir = new File(Paths.get(unzippedFileDest, pkgName, RULE_DIR_NAME)
+                .toString());
         File[] mappingRuleFiles = mappingRuleDir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
@@ -171,28 +262,53 @@ public class AppBuilderMain {
         for (File mappingRuleFile : mappingRuleFiles) {
             ArrayList<RuleInfo> infoList = XmlUtil.parseMappingRule(mappingRuleFile);
 
-            File layoutOutPutFolder = new File(appOutPath + LAYOUT_PATH,
+            File layoutOutputFile = new File(appOutPath + LAYOUT_PATH,
                     mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX));
             // copy updated layout files to output
-            FileUtils.copyFile(new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME).toString(),
-                    mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX)), layoutOutPutFolder);
+            FileUtils.copyFile(new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME)
+                            .toString(), mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX)),
+                    layoutOutputFile);
 
             String prefName = FilenameUtils.removeExtension(mappingRuleFile.getName())
                     .replace(RULE_SUFFIX, PREF_SUFFIX);
             if (isDebug) {
-                System.out.println("infoList:\n" + infoList);
-                System.out.println("prefName:\n" + prefName);
-                System.out.println("layoutFile:\n" + layoutOutPutFolder);
+                System.out.println();
+                System.out.println("infoList: " + infoList);
+                System.out.println("mappingRule: " + mappingRuleFile);
+                System.out.println("prefName: " + prefName);
+                System.out.println("layoutFile: " + layoutOutputFile);
             }
 
+            ArrayList<String> wearViewIds = new ArrayList<>();
+            ArrayList<String> phoneViewIds = new ArrayList<>();
 
             for (RuleInfo ruleInfo : infoList) {
                 String wearViewId = ruleInfo.getWearViewId();
+                if (!wearViewIds.contains(wearViewId)) {
+                    if (isDebug) {
+                        System.out.println("wearViewId add: " + ID_PREFIX + wearViewId);
+                    }
+                    wearViewIds.add(ID_PREFIX + wearViewId);
+                }
+
+                String phoneViewId = ruleInfo.getPhoneViewId();
+                if (!phoneViewIds.contains(phoneViewId)) {
+                    if (isDebug) {
+                        System.out.println("phoneViewId add: " + phoneViewId);
+                    }
+                    phoneViewIds.add(phoneViewId);
+                }
+
+                if (ruleInfo.isListView()) {
+                    phoneItemViewIds.add(phoneViewId);
+                }
+
                 String text = ruleInfo.getTextInfo();
                 Info changedInfo = new Info();
 
                 if (text != null) {
-                    String entryName = FilenameUtils.removeExtension(layoutOutPutFolder.getName()) + "_" + wearViewId;
+                    String entryName = FilenameUtils.removeExtension(layoutOutputFile.getName())
+                            + "_" + wearViewId;
                     // put text to stringMap
                     stringMap.put(entryName, text);
                     // find the node with id and set text
@@ -205,7 +321,8 @@ public class AppBuilderMain {
                 String image = ruleInfo.getImageInfo();
                 if (image != null) {
                     // if image file exists
-                    File imageFile = new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME).toString(), image);
+                    File imageFile = new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME)
+                            .toString(), image);
                     if (!imageFile.exists()) {
                         continue;
                     }
@@ -217,11 +334,40 @@ public class AppBuilderMain {
 //                    findViewIdSetInfo(layoutOutPutFolder, wearViewId, value);
                 }
 
-                idInfoMap.put(wearViewId, changedInfo);
+                idInfoMap.put(ID_VALUE_PREFIX + wearViewId, changedInfo);
             }
 
             // set text and image info to layout file at once
+            updateLayout(layoutOutputFile, idInfoMap);
+            idInfoMap.clear();
 
+            String layoutName = LAYOUT_PREFIX + FilenameUtils.removeExtension(layoutOutputFile
+                    .getName());
+            String wearIdName = ARRAY_PREFIX + prefName + WEAR_ID_SUFFIX;
+            String phoneIdName = ARRAY_PREFIX + prefName + PHONE_ID_SUFFIX;
+            if (isDebug) {
+                System.out.println(prefName);
+                System.out.println(layoutName);
+                System.out.println(wearIdName);
+                System.out.println(phoneIdName);
+            }
+
+            prefs.add(prefName);
+
+            if (prefName.endsWith(LIST_SUFFIX + PREF_SUFFIX)) {
+                itemLayouts.add(layoutName);
+                wearItemViewIdArray.add(wearIdName);
+                phoneItemViewIdArray.add(phoneIdName);
+                wearItemViewIdIndexMap.put(prefName + WEAR_ID_SUFFIX, wearViewIds);
+                phoneItemViewIdIndexMap.put(prefName + PHONE_ID_SUFFIX, phoneViewIds);
+                System.out.println();
+            } else {
+                layouts.add(layoutName);
+                wearViewIdArray.add(wearIdName);
+                phoneViewIdArray.add(phoneIdName);
+                wearViewIdIndexMap.put(prefName + WEAR_ID_SUFFIX, wearViewIds);
+                phoneViewIdIndexMap.put(prefName + PHONE_ID_SUFFIX, phoneViewIds);
+            }
         }
 
         // write stringMap to strings.xml
@@ -229,38 +375,223 @@ public class AppBuilderMain {
         serializeMapToFile(stringMap, stringsFile);
 
         // process mapping rules and layout xml to generate arrays.xml files
-
-        // copy above processed xml files to corresponding directory
+        File arraysFile = new File(appOutPath + VALUES_PATH, ARRAYS_FILE_NAME);
+        generateArraysXmlFile(arraysFile);
 
         // put all together, copy app project to WearAppEnv folder to start building apk
+
+        // transfer apk back to the phone
     }
 
-    private static void findViewIdSetInfo(File layoutFile, HashMap<String, Info> idInfoMap) throws IOException {
-        String layoutContent = FileUtils.readFileToString(layoutFile, Charset.defaultCharset());
-        // parse layout, search target node, set node attribute, write back to file
+    private static void generateArraysXmlFile(File arraysFile) {
+        try {
+            FileUtils.touch(arraysFile);
+            XmlSerializer serializer = XmlPullParserFactory.newInstance().newSerializer();
+            FileWriter writer = new FileWriter(arraysFile);
+            serializer.setOutput(writer);
+            serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+            serializer.startDocument("UTF-8", true);
+            serializer.comment("\nnote: this file is auto generated by UIWear\n");
+            serializer.startTag(null, RESOURCES_TAG);
 
-        //parse layout to hash map, map key is wearViewId, key is list of attribute-value pairs
-        HashMap<String, ArrayList<Pair<String, String>>> idMap = new HashMap<>();
+            // prefs section
+            serializer.startTag(null, STRING_ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, PREFS_VALUE);
+            for (String pref : prefs) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(pref);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, STRING_ARRAY_TAG);
+
+            // layouts section
+            serializer.startTag(null, ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, LAYOUTS_VALUE);
+            for (String layout : layouts) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(layout);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, ARRAY_TAG);
+
+            // wear id and index section
+            serializer.startTag(null, INTEGER_ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, WEAR_VIEW_ID_ARRAY_VALUE);
+            for (String idArray : wearViewIdArray) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(idArray);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, INTEGER_ARRAY_TAG);
 
 
-        // search target node and add node attributes
-        Set<String> idSet = idInfoMap.keySet();
-        for (String wearViewId : idSet) {
-            ArrayList<Pair<String, String>> pairs = idMap.get(wearViewId);
+            for (String arrayId : wearViewIdIndexMap.keySet()) {
+                serializer.startTag(null, ARRAY_TAG);
+                serializer.attribute(null, ATTR_NAME, arrayId);
+                for (String idArray : wearViewIdIndexMap.get(arrayId)) {
+                    serializer.startTag(null, ITEM_TAG);
+                    serializer.text(idArray);
+                    serializer.endTag(null, ITEM_TAG);
+                }
+                serializer.endTag(null, ARRAY_TAG);
+            }
 
-            Info info = idInfoMap.get(wearViewId);
-            String textAttrName = "android:text";
-            String textAttrValue = info.getText();
-            pairs.add(new Pair<>(textAttrName, textAttrValue));
-            String imageAttrName = "android:background";
-            String imageAttrValue = info.getImage();
-            pairs.add(new Pair<>(imageAttrName, imageAttrValue));
+            // phone id and index section
+            serializer.startTag(null, INTEGER_ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, PHONE_VIEW_ID_ARRAY_VALUE);
+            for (String idArray : phoneViewIdArray) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(idArray);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, INTEGER_ARRAY_TAG);
 
+            for (String phoneArrayId : phoneViewIdIndexMap.keySet()) {
+                serializer.startTag(null, STRING_ARRAY_TAG);
+                serializer.attribute(null, ATTR_NAME, phoneArrayId);
+                for (String phoneIdArray : phoneViewIdIndexMap.get(phoneArrayId)) {
+                    serializer.startTag(null, ITEM_TAG);
+                    System.out.println();
+                    serializer.text(phoneIdArray);
+                    serializer.endTag(null, ITEM_TAG);
+                }
+                serializer.endTag(null, STRING_ARRAY_TAG);
+            }
+
+            //==========item section==========//
+
+            // item binding phone view id section
+            serializer.startTag(null, STRING_ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, PHONE_VIEW_IDS_VALUE);
+            for (String itemId : phoneItemViewIds) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(itemId);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, STRING_ARRAY_TAG);
+
+            // item layouts section
+            serializer.startTag(null, ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, ITEM_LAYOUTS_VALUE);
+            for (String layout : itemLayouts) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(layout);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, ARRAY_TAG);
+
+            // item wear id and index section
+            serializer.startTag(null, INTEGER_ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, WEAR_ITEM_VIEW_ID_ARRAY_VALUE);
+            for (String idArray : wearItemViewIdArray) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(idArray);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, INTEGER_ARRAY_TAG);
+
+
+            for (String arrayId : wearItemViewIdIndexMap.keySet()) {
+                serializer.startTag(null, ARRAY_TAG);
+                serializer.attribute(null, ATTR_NAME, arrayId);
+                for (String idArray : wearItemViewIdIndexMap.get(arrayId)) {
+                    System.out.println();
+                    serializer.startTag(null, ITEM_TAG);
+                    serializer.text(idArray);
+                    serializer.endTag(null, ITEM_TAG);
+                }
+                serializer.endTag(null, ARRAY_TAG);
+            }
+
+            // phone id and index section
+            serializer.startTag(null, INTEGER_ARRAY_TAG);
+            serializer.attribute(null, ATTR_NAME, PHONE_ITEM_VIEW_ID_ARRAY_VALUE);
+            for (String idArray : phoneItemViewIdArray) {
+                serializer.startTag(null, ITEM_TAG);
+                serializer.text(idArray);
+                serializer.endTag(null, ITEM_TAG);
+            }
+            serializer.endTag(null, INTEGER_ARRAY_TAG);
+
+            for (String phoneArrayId : phoneItemViewIdIndexMap.keySet()) {
+                serializer.startTag(null, STRING_ARRAY_TAG);
+                serializer.attribute(null, ATTR_NAME, phoneArrayId);
+                for (String phoneIdArray : phoneItemViewIdIndexMap.get(phoneArrayId)) {
+                    serializer.startTag(null, ITEM_TAG);
+                    serializer.text(phoneIdArray);
+                    System.out.println();
+                    serializer.endTag(null, ITEM_TAG);
+                }
+                serializer.endTag(null, STRING_ARRAY_TAG);
+            }
+
+            serializer.endTag(null, RESOURCES_TAG);
+            serializer.endDocument();
+        } catch (IOException | XmlPullParserException e) {
+            e.printStackTrace();
         }
-
-        // serialize idMap back to the layoutFile
-
-
     }
+
+    // parse layout, search target node, set node attribute, write back to file
+    private static void updateLayout(File layoutFile, HashMap<String, Info> idInfoMap)
+            throws IOException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setValidating(false);
+
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(new FileInputStream(layoutFile));
+            Transformer transformer = transformerFactory.newTransformer();
+
+            // search target node and set node attributes
+            Set<String> idSet = idInfoMap.keySet();
+            for (String wearViewId : idSet) {
+                Info info = idInfoMap.get(wearViewId);
+
+                doc.getDocumentElement().normalize();
+                NodeList nList = doc.getElementsByTagName("*");
+                for (int i = 0; i < nList.getLength(); i++) {
+                    Node node = nList.item(i);
+
+                    Element element = (Element) node;
+                    String idAttrValue = element.getAttribute(ID_ATTR_NAME);
+                    if (wearViewId.equals(idAttrValue)) {
+                        String textAttrValue = info.getText();
+                        String imageAttrValue = info.getImage();
+                        if (textAttrValue != null) {
+                            if (isDebug) {
+                                System.out.println("element: " + element.getNodeName());
+                                System.out.println("textAttrValue: " + textAttrValue);
+                            }
+                            element.setAttribute(TEXT_ATTR_NAME, textAttrValue);
+                        }
+                        if (imageAttrValue != null) {
+                            if (isDebug) {
+                                System.out.println("element: " + element.getNodeName());
+                                System.out.println("imageAttrValue: " + imageAttrValue);
+                            }
+                            element.setAttribute(IMAGE_ATTR_NAME, imageAttrValue);
+                        }
+
+                    }
+
+                    if (idAttrValue != null && idAttrValue.length() > 0) {
+                        if (isDebug) {
+                            System.out.println("id: " + idAttrValue);
+                        }
+
+                    }
+                }
+            }
+
+            // serialize idMap back to the layoutFile
+            transformer.transform(new DOMSource(doc), new StreamResult(new FileWriter(layoutFile)));
+
+        } catch (SAXException | ParserConfigurationException | TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

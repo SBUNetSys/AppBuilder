@@ -36,13 +36,40 @@ public class Constants {
     public static final String LIST_SUFFIX = "_list";
     public static final String ITEM_SUFFIX = "_item";
 
+    public static final String WEAR_ID_SUFFIX = "_wear_id";
+    public static final String PHONE_ID_SUFFIX = "_phone_id";
+
     public static final String DRAWABLE_PREFIX = "@drawable/";
     public static final String STRING_PREFIX = "@string/";
-    public static final String ID_PREFIX = "@+id/";
+    public static final String ID_VALUE_PREFIX = "@+id/";
+    public static final String ID_ATTR_NAME = "android:id";
+    public static final String TEXT_ATTR_NAME = "android:text";
+    public static final String IMAGE_ATTR_NAME = "android:background";
+
+    public static final String LAYOUT_PREFIX = "@layout/";
+    public static final String ARRAY_PREFIX = "@array/";
+    public static final String ID_PREFIX = "@id/";
 
     public static final String APP_TAG_IN_TEMPLATE = "app";
 
-    public static final String STRINGS_RES_TAG = "resources";
+    public static final String RESOURCES_TAG = "resources";
     public static final String STRING_TAG = "string";
-    public static final String STRING_ATTR_NAME = "name";
+    public static final String ATTR_NAME = "name";
+    public static final String STRING_ARRAY_TAG = "string-array";
+    public static final String INTEGER_ARRAY_TAG = "integer-array";
+    public static final String ARRAY_TAG = "array";
+    public static final String ITEM_TAG = "item";
+
+    public static final String PREFS_VALUE = "prefs";
+
+    public static final String LAYOUTS_VALUE = "layouts";
+    public static final String WEAR_VIEW_ID_ARRAY_VALUE = "wear_view_id_array";
+    public static final String PHONE_VIEW_ID_ARRAY_VALUE = "phone_view_id_array";
+
+    public static final String ITEM_LAYOUTS_VALUE = "wear_item_layouts";
+    public static final String PHONE_VIEW_IDS_VALUE = "phone_item_view_ids";
+    public static final String WEAR_ITEM_VIEW_ID_ARRAY_VALUE = "wear_item_view_id_array";
+    public static final String PHONE_ITEM_VIEW_ID_ARRAY_VALUE = "phone_item_view_id_array";
+
+
 }
