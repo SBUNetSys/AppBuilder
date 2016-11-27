@@ -45,56 +45,7 @@ import edu.stonybrook.cs.netsys.appbuilder.data.Info;
 import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
 import edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil;
 
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ACTIVITY_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.APP_NAME_TEXT;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.APP_TAG_IN_TEMPLATE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAYS_FILE_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAY_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAY_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.BUILD_GRADLE_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.CODE_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.CONFIG_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.DRAWABLE_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.DRAWABLE_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.IC_LAUNCHER;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_VALUE_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.IMAGE_ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.INTEGER_ARRAY_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ITEM_LAYOUTS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ITEM_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAUNCHER_ICON_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUTS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LIST_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.MANIFEST_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.MANIFEST_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.OUTPUT_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_ID_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_ITEM_VIEW_ID_ARRAY_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_VIEW_IDS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_VIEW_ID_ARRAY_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PREFS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PREF_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RESOURCES_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RES_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RULE_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RULE_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRINGS_FILE_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_ARRAY_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.TEMPLATE_FOLDER_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.TEXT_ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.UIWEAR_ACTIVITY_LAYOUT_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.UIWEAR_DEFAULT_ICON_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.VALUES_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_ID_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_ITEM_VIEW_ID_ARRAY_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_VIEW_ID_ARRAY_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.*;
 import static edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil.serializeMapToFile;
 
 /**
@@ -172,6 +123,12 @@ public class AppBuilderMain {
             System.out.println("appOutPath: " + appOutPath);
             System.out.println();
         }
+
+        File appFilesTempFoler = new File(unzippedFileDest + pkgName);
+        if (appFilesTempFoler.exists()) {
+            FileUtils.deleteDirectory(appFilesTempFoler);
+        }
+
         // extract zip file to temp folder
         try {
             ZipFile zipFile = new ZipFile(receivedFileSavedPath + fileName);
@@ -269,16 +226,6 @@ public class AppBuilderMain {
                             .toString(), mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX)),
                     layoutOutputFile);
 
-            String prefName = FilenameUtils.removeExtension(mappingRuleFile.getName())
-                    .replace(RULE_SUFFIX, PREF_SUFFIX);
-            if (isDebug) {
-                System.out.println();
-                System.out.println("infoList: " + infoList);
-                System.out.println("mappingRule: " + mappingRuleFile);
-                System.out.println("prefName: " + prefName);
-                System.out.println("layoutFile: " + layoutOutputFile);
-            }
-
             ArrayList<String> wearViewIds = new ArrayList<>();
             ArrayList<String> phoneViewIds = new ArrayList<>();
 
@@ -341,6 +288,16 @@ public class AppBuilderMain {
             updateLayout(layoutOutputFile, idInfoMap);
             idInfoMap.clear();
 
+            String prefName = FilenameUtils.removeExtension(mappingRuleFile.getName())
+                    .replace(RULE_SUFFIX, PREF_SUFFIX);
+            if (isDebug) {
+                System.out.println();
+                System.out.println("infoList: " + infoList);
+                System.out.println("mappingRule: " + mappingRuleFile);
+                System.out.println("prefName: " + prefName);
+                System.out.println("layoutFile: " + layoutOutputFile);
+            }
+
             String layoutName = LAYOUT_PREFIX + FilenameUtils.removeExtension(layoutOutputFile
                     .getName());
             String wearIdName = ARRAY_PREFIX + prefName + WEAR_ID_SUFFIX;
@@ -352,9 +309,11 @@ public class AppBuilderMain {
                 System.out.println(phoneIdName);
             }
 
-            prefs.add(prefName);
+            if (!prefName.endsWith(ITEM_SUFFIX + PREF_SUFFIX)) {
+                prefs.add(prefName);
+            }
 
-            if (prefName.endsWith(LIST_SUFFIX + PREF_SUFFIX)) {
+            if (prefName.endsWith(ITEM_SUFFIX + PREF_SUFFIX)) {
                 itemLayouts.add(layoutName);
                 wearItemViewIdArray.add(wearIdName);
                 phoneItemViewIdArray.add(phoneIdName);
