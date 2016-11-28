@@ -65,6 +65,8 @@ public class XmlUtil {
 
                 String to = parser.getAttributeValue(null, TO_TAG);
                 if (to == null) {
+                    System.err.println("has from attribute: " + from
+                            + " but no to attribute for view:" + parser.getName());
                     continue;
                 } else {
                     info.setWearViewId(to);

@@ -8,6 +8,7 @@ package edu.stonybrook.cs.netsys.appbuilder.data;
 public class Constants {
     public static final String SRC_PATH = "src/main/resources/";
     public static final String TEMPLATE_FOLDER_NAME = SRC_PATH + "uiwear/template";
+    public static final String WEAR_APP_ENV_FOLDER_NAME = SRC_PATH + "uiwear/WearAppEnv";
     public static final String MANIFEST_NAME = "AndroidManifest.xml.ftl";
     public static final String BUILD_GRADLE_NAME = "build.gradle.ftl";
     public static final String ACTIVITY_NAME = "MainActivity.java.ftl";

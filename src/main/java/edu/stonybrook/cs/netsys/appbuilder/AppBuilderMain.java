@@ -18,17 +18,15 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -112,7 +110,7 @@ public class AppBuilderMain {
         // step 0, open socket listening for new wear app building request
         // step 1, new thread handle received file, pkgName.zip, unzip and put to temp folder
         String receivedFileSavedPath = "src/main/resources/";
-        String fileName = "com.spotify.music.zip";
+        String fileName = "com.northpark.drinkwater.zip";
         String pkgName = FilenameUtils.getBaseName(fileName);
         if (isDebug) {
             System.out.println("pkgName: " + pkgName);
@@ -136,6 +134,18 @@ public class AppBuilderMain {
         } catch (ZipException e) {
             e.printStackTrace();
         }
+        FileUtils.copyDirectory(new File(WEAR_APP_ENV_FOLDER_NAME), new File(appOutPath));
+        Set<PosixFilePermission> permissionsSet = new HashSet<>();
+        permissionsSet.add(PosixFilePermission.OWNER_READ);
+        permissionsSet.add(PosixFilePermission.OWNER_WRITE);
+        permissionsSet.add(PosixFilePermission.OWNER_EXECUTE);
+        permissionsSet.add(PosixFilePermission.GROUP_READ);
+        permissionsSet.add(PosixFilePermission.GROUP_EXECUTE);
+        permissionsSet.add(PosixFilePermission.OTHERS_READ);
+        permissionsSet.add(PosixFilePermission.OTHERS_EXECUTE);
+        Files.setPosixFilePermissions(Paths.get(appOutPath, "gradlew"), permissionsSet);
+        String outputPath = appOutPath;
+        appOutPath += "/app/";
 
         String appNameFilePath = Paths.get(unzippedFileDest, pkgName,
                 CONFIG_DIR_NAME, APP_NAME_TEXT).toString();
@@ -338,6 +348,22 @@ public class AppBuilderMain {
         generateArraysXmlFile(arraysFile);
 
         // put all together, copy app project to WearAppEnv folder to start building apk
+        String[] buildApkCmd = new String[]{"bash", "-c", "cd /Users/qqcao/Repos/UIWear/AppBuilder/" + outputPath + " && ./gradlew build"};
+        Runtime run = Runtime.getRuntime();
+        Process pr = run.exec(buildApkCmd);
+        try {
+            pr.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        String line;
+        while ((line = buf.readLine()) != null) {
+            System.out.println();
+            if ("BUILD SUCCESSFUL".equals(line)) {
+                System.out.println("success");
+            }
+        }
 
         // transfer apk back to the phone
     }

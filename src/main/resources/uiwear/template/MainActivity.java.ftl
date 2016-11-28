@@ -12,7 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.uiwear.res.TypedArray;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.wearable.view.FragmentGridPagerAdapter;
@@ -164,8 +164,7 @@ return;
 
 mPager.setCurrentItem(pageIndex, 0, false);
 // each node contains clickId, phoneViewId, text, image bytes
-ArrayList
-<DataNode> dataNodes = dataBundle.getDataNodes();
+ArrayList<DataNode> dataNodes = dataBundle.getDataNodes();
     for (DataNode node : dataNodes) {
     Logger.d("new node normal: " + node);
     }
@@ -179,9 +178,7 @@ ArrayList
 
     // list view data need to be parsed first
 
-    ArrayList
-    <DataNode
-    []> listNodes = dataBundle.getListNodes();
+    ArrayList<DataNode []> listNodes = dataBundle.getListNodes();
     for (DataNode[] list : listNodes) {
     for (DataNode node : list) {
     Logger.d("new node list: " + node);
@@ -222,14 +219,11 @@ ArrayList
 
     int phoneItemIdIndex = mPhoneItemViewIdIndexArray[itemIndex];
     String[] phoneItemViewIds = getResources().getStringArray(phoneItemIdIndex);
-    final List
-    <String> phoneItemViewIdList = Arrays.asList(phoneItemViewIds);
+    final List<String> phoneItemViewIdList = Arrays.asList(phoneItemViewIds);
 
         WearableListView listView = (WearableListView) nodeView;
         listView.setGreedyTouchMode(true);
-        // listView.setAdapter(new BaseQuickAdapter
-        <DataNode
-        [], BaseViewHolder>(
+        // listView.setAdapter(new BaseQuickAdapter<DataNode [], BaseViewHolder>(
         // wearItemLayoutResId, mListDataNodes) {
         // @Override
         // protected void convert(BaseViewHolder baseViewHolder,
