@@ -110,7 +110,7 @@ public class AppBuilderMain {
         // step 0, open socket listening for new wear app building request
         // step 1, new thread handle received file, pkgName.zip, unzip and put to temp folder
         String receivedFileSavedPath = "src/main/resources/";
-        String fileName = "com.northpark.drinkwater.zip";
+        String fileName = "com.spotify.music.zip";
         String pkgName = FilenameUtils.getBaseName(fileName);
         if (isDebug) {
             System.out.println("pkgName: " + pkgName);
@@ -348,7 +348,8 @@ public class AppBuilderMain {
         generateArraysXmlFile(arraysFile);
 
         // put all together, copy app project to WearAppEnv folder to start building apk
-        String[] buildApkCmd = new String[]{"bash", "-c", "cd /Users/qqcao/Repos/UIWear/AppBuilder/" + outputPath + " && ./gradlew build"};
+        String[] buildApkCmd = new String[]{"bash", "-c", "cd `pwd`" + File.pathSeparator + outputPath
+                + " && ./gradlew build"};
         Runtime run = Runtime.getRuntime();
         Process pr = run.exec(buildApkCmd);
         try {
@@ -359,7 +360,7 @@ public class AppBuilderMain {
         BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
         String line;
         while ((line = buf.readLine()) != null) {
-            System.out.println();
+            System.out.println(line);
             if ("BUILD SUCCESSFUL".equals(line)) {
                 System.out.println("success");
             }
