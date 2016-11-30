@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout>
+    <LinearLayout>
+        <LinearLayout>
+            <Spinner/>
+        </LinearLayout>
+    </LinearLayout>
+    <android.support.wearable.view.WearableListView
+            from="com.aplicaciones.listacompra:id/swiping_layout" to="sample_list_view"/>
+</RelativeLayout>

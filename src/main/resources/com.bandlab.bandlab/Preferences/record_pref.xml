@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.bandlab.bandlab:id/sme_timer</id>
+    <rect>549 384 933 449</rect>
+  </node>
+  <node>
+    <id>com.bandlab.bandlab:id/sme_record</id>
+    <rect>432 1223 648 1439</rect>
+  </node>
+</nodes>

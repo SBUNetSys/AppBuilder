@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Spotify</string>
-    <string name="play_song_layout_title">Song title</string>
-    <string name="play_song_layout_text">Album artist</string>
-    <string name="recently_played_layout_header">Recently Played</string>
-</resources>

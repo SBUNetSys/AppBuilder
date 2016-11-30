@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@android:color/white" android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:id="@+id/linearActionBar"
+                  android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:gravity="center" android:layout_gravity="center"
+                      android:orientation="horizontal" android:layout_width="0.0dip"
+                      android:layout_height="wrap_content" android:layout_weight="1.0">
+            <Spinner android:textAppearance="?android:textAppearanceLarge"
+                     android:textColor="@color/white" android:gravity="center"
+                     android:layout_gravity="center" android:id="@+id/tvListName"
+                     android:layout_width="wrap_content" android:layout_height="35.0dip"/>
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView android:id="@+id/shadow" android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@+id/linearActionBar"/>
+    <android.support.wearable.view.WearableListView android:id="@+id/sample_list_view"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="fill_parent"
+                                                    android:layout_below="@+id/shadow"
+                                                    xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <ImageButton android:id="@+id/imBtnAddArticle" android:background="@android:color/transparent"
+                 android:layout_width="wrap_content" android:layout_height="fill_parent"
+                 android:src="@android:drawable/ic_input_add" android:layout_centerVertical="true"/>
+</RelativeLayout>

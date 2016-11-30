@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.aplicaciones.listacompra:id/swiping_layout</id>
+    <rect>0 420 1080 564</rect>
+    <node>
+      <id>com.aplicaciones.listacompra:id/imageTrashButton</id>
+      <rect>48 432 168 552</rect>
+    </node>
+    <node>
+      <id>com.aplicaciones.listacompra:id/text</id>
+      <rect>216 455 912 528</rect>
+    </node>
+  </node>
+</nodes>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.musicplayer.player.mp3player.white:id/title</id>
+    <rect>204 271 687 344</rect>
+  </node>
+  <node>
+    <id>com.musicplayer.player.mp3player.white:id/artist</id>
+    <rect>204 344 687 401</rect>
+  </node>
+  <node>
+    <id>com.musicplayer.player.mp3player.white:id/btn_play</id>
+    <rect>450 1549 630 1746</rect>
+  </node>
+  <node>
+    <id>com.musicplayer.player.mp3player.white:id/btn_prev</id>
+    <rect>168 1593 450 1701</rect>
+  </node>
+  <node>
+    <id>com.musicplayer.player.mp3player.white:id/btn_nxt</id>
+    <rect>630 1593 912 1701</rect>
+  </node>
+</nodes>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.contacts1800.ecomapp:id/left_minus</id>
+    <rect>48 360 269 802</rect>
+  </node>
+  <node>
+    <id>com.contacts1800.ecomapp:id/left_plus</id>
+    <rect>269 360 490 802</rect>
+  </node>
+</nodes>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.wearable.view.CircledImageView android:id="@+id/image_article"
+                                                    android:layout_width="52.0dip"
+                                                    android:layout_height="52.0dip"
+                                                    android:layout_marginLeft="10.0dip"
+                                                    app:circle_color="@android:color/black"
+                                                    app:circle_border_width="2.0dip"
+                                                    app:circle_border_color="#ff58d3f7"/>
+    <Button android:textSize="16.0sp" android:textColor="@android:color/black"
+            android:gravity="center_vertical" android:id="@+id/text_article"
+            android:background="@null" android:layout_width="fill_parent"
+            android:layout_height="52.0dip" android:layout_marginLeft="65.0dip"
+            android:layout_marginRight="10.0dip" android:minWidth="0.0dip"
+            android:minHeight="0.0dip"/>
+</merge>
