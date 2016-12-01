@@ -41,6 +41,7 @@ import edu.stonybrook.cs.netsys.appbuilder.data.App;
 import edu.stonybrook.cs.netsys.appbuilder.data.Info;
 import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
 import edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil;
+import sun.security.ssl.Debug;
 
 import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ACTIVITY_NAME;
 import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.APP_NAME_TEXT;
@@ -176,13 +177,19 @@ public class AppBuilderMain {
             FileUtils.deleteDirectory(appFilesTempFoler);
         }
 
-        // extract zip file to temp folder
-        try {
-            ZipFile zipFile = new ZipFile(receivedFileSavedPath + fileName);
-            zipFile.extractAll(unzippedFileDest);
-        } catch (ZipException e) {
-            e.printStackTrace();
+        if (isDebug) {
+            FileUtils.copyDirectoryToDirectory(new File(receivedFileSavedPath + pkgName),
+                    new File(unzippedFileDest));
+        } else {
+            // extract zip file to temp folder
+            try {
+                ZipFile zipFile = new ZipFile(receivedFileSavedPath + fileName);
+                zipFile.extractAll(unzippedFileDest);
+            } catch (ZipException e) {
+                e.printStackTrace();
+            }
         }
+
         FileUtils.copyDirectory(new File(WEAR_APP_ENV_FOLDER_NAME), new File(appOutPath));
         Set<PosixFilePermission> permissionsSet = new HashSet<>();
         permissionsSet.add(PosixFilePermission.OWNER_READ);
