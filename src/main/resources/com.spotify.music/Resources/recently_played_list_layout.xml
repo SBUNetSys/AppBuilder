@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.wearable.view.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                               android:layout_width="fill_parent"
-                                              android:layout_height="fill_parent"
-                                              android:background="@android:color/white">
-
+                                              android:layout_height="fill_parent">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                  android:layout_width="fill_parent"
                  android:layout_height="47.0dip"
                  android:orientation="horizontal"
-                 android:background="@color/blue"
                  android:paddingLeft="8.0dip"
                  android:paddingRight="8.0dip">
 
@@ -22,13 +19,13 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="18.0sp"/>
+                android:textColor="#ffffffff"
+                android:textSize="18.0sp" />
     </FrameLayout>
 
     <android.support.wearable.view.WearableListView
-            android:id="@+id/sample_list_view"
+            android:id="@+id/content_list"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+            android:layout_height="fill_parent" />
 
 </android.support.wearable.view.BoxInsetLayout>

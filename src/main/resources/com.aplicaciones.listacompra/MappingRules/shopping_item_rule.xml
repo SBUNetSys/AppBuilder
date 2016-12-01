@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge>
+<LinearLayout>
     <android.support.wearable.view.CircledImageView
             from="com.aplicaciones.listacompra:id/imageTrashButton" to="image_article"/>
     <Button from="com.aplicaciones.listacompra:id/text" to="text_article"/>
-</merge>
+</LinearLayout>

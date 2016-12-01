@@ -18,15 +18,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -405,7 +397,7 @@ public class AppBuilderMain {
         generateArraysXmlFile(arraysFile);
 
         // put all together, copy app project to WearAppEnv folder to start building apk
-        String[] buildApkCmd = new String[]{"bash", "-c", "cd `pwd`" + File.pathSeparator + outputPath
+        String[] buildApkCmd = new String[]{"bash", "-c", "cd `pwd`/" + outputPath
                 + " && ./gradlew build"};
         Runtime run = Runtime.getRuntime();
         Process pr = run.exec(buildApkCmd);
@@ -422,6 +414,15 @@ public class AppBuilderMain {
                 System.out.println("success");
             }
         }
+
+        BufferedReader stderrReader = new BufferedReader(
+                new InputStreamReader(pr.getErrorStream()));
+        while ((line = stderrReader.readLine()) != null) {
+            System.err.println(line);
+        }
+
+        int retValue = pr.exitValue();
+        System.out.println("return value: " + retValue);
 
         // transfer apk back to the phone
     }

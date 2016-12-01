@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout >
+    <View from="com.contacts1800.ecomapp:id/lens_view_left" to="lens_view" />
+    <LinearLayout>
+        <Button from="com.contacts1800.ecomapp:id/left_minus" to="remove_day_button">
+            <text>-</text>
+        </Button>
+        <Button from="com.contacts1800.ecomapp:id/left_plus" to="add_day_button">
+            <text>+</text>
+        </Button>
+    </LinearLayout>
+</FrameLayout>

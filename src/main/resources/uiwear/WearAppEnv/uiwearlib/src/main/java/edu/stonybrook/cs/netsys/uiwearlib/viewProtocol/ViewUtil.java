@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,6 +35,8 @@ public class ViewUtil {
         nodeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Logger.d("render node click: " + clickId);
+                Log.d("BENCH", "action click from wear app: " + clickId);
                 Intent clickIntent = new Intent(CLICK_PATH);
                 clickIntent.putExtra(PKG_KEY, context.getPackageName());
                 clickIntent.putExtra(CLICK_ID_KEY, clickId);
@@ -53,8 +56,8 @@ public class ViewUtil {
         }
 
         if (hasImageInfo(node)) {
-            File imageFile = new File(node.getImageFile());
-//            Uri imageUri = Uri.parse(node.getImageFile());
+            File imageFile = new File(node.getImageHash());
+//            Uri imageUri = Uri.parse(node.getImageHash());
             Logger.v("image file: " + imageFile);
             Glide.with(context).load(imageFile).asBitmap().into(getViewTarget(context, nodeView));
         }
@@ -64,7 +67,7 @@ public class ViewUtil {
         return new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource,
-                    GlideAnimation<? super Bitmap> glideAnimation) {
+                                        GlideAnimation<? super Bitmap> glideAnimation) {
                 Drawable drawable = new BitmapDrawable(context.getResources(), resource);
                 nodeView.setBackground(drawable);
             }
@@ -76,6 +79,6 @@ public class ViewUtil {
     }
 
     private static boolean hasImageInfo(DataNode node) {
-        return node.getImageFile() != null && !node.getImageFile().isEmpty();
+        return node.getImageHash() != null && !node.getImageHash().isEmpty();
     }
 }

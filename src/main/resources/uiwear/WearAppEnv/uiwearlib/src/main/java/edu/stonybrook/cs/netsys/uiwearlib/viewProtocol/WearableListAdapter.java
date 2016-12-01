@@ -24,8 +24,8 @@ public class WearableListAdapter extends WearableListView.Adapter {
     private ArrayList<DataNode[]> mListDataNodes;
 
     public WearableListAdapter(Context context, int itemLayoutResId,
-            List<String> phoneItemViewIdList,
-            int[] itemIds, ArrayList<DataNode[]> listDataNodes) {
+                               List<String> phoneItemViewIdList,
+                               int[] itemIds, ArrayList<DataNode[]> listDataNodes) {
         mContext = context;
         mItemLayoutResId = itemLayoutResId;
         mPhoneItemViewIdList = phoneItemViewIdList;
@@ -35,7 +35,7 @@ public class WearableListAdapter extends WearableListView.Adapter {
 
     @Override
     public WearableListView.ViewHolder onCreateViewHolder(ViewGroup parent,
-            int viewType) {
+                                                          int viewType) {
         return new WearableListView.ViewHolder(
                 LayoutInflater.from(mContext).inflate(mItemLayoutResId, parent, false));
     }
@@ -45,6 +45,9 @@ public class WearableListAdapter extends WearableListView.Adapter {
         DataNode[] dataNodes = mListDataNodes.get(position);
         for (DataNode node : dataNodes) {
             Logger.d("new item node: " + node);
+            if (node == null) {
+                return;
+            }
             String phoneItemNodeViewId = node.getViewId();
             int index = mPhoneItemViewIdList.indexOf(phoneItemNodeViewId);
 
