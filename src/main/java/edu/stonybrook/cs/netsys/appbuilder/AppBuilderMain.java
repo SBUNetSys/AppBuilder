@@ -147,6 +147,7 @@ public class AppBuilderMain {
     private static HashMap<String, ArrayList<String>> wearItemViewIdIndexMap = new HashMap<>();
     private static HashMap<String, ArrayList<String>> phoneItemViewIdIndexMap = new HashMap<>();
 
+    private static final String pkgName = "com.bandlab.bandlab";
 
     static {
         try {
@@ -160,8 +161,6 @@ public class AppBuilderMain {
         // step 0, open socket listening for new wear app building request
         // step 1, new thread handle received file, pkgName.zip, unzip and put to temp folder
         String receivedFileSavedPath = "src/main/resources/";
-        String fileName = "com.aplicaciones.listacompra.zip";
-        String pkgName = FilenameUtils.getBaseName(fileName);
         if (isDebug) {
             System.out.println("pkgName: " + pkgName);
             System.out.println();
@@ -183,6 +182,7 @@ public class AppBuilderMain {
         } else {
             // extract zip file to temp folder
             try {
+                String fileName = pkgName + ".zip";
                 ZipFile zipFile = new ZipFile(receivedFileSavedPath + fileName);
                 zipFile.extractAll(unzippedFileDest);
             } catch (ZipException e) {
@@ -407,29 +407,76 @@ public class AppBuilderMain {
         String[] buildApkCmd = new String[]{"bash", "-c", "cd `pwd`/" + outputPath
                 + " && ./gradlew build"};
         Runtime run = Runtime.getRuntime();
-        Process pr = run.exec(buildApkCmd);
-        try {
-            pr.waitFor();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        String line;
-        while ((line = buf.readLine()) != null) {
-            System.out.println(line);
-            if ("BUILD SUCCESSFUL".equals(line)) {
-                System.out.println("success");
+       final Process pr = run.exec(buildApkCmd);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    pr.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
 
-        BufferedReader stderrReader = new BufferedReader(
+        final BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        while (stdoutReader.ready()) {
+                            String line = stdoutReader.readLine();
+                            System.out.println("stdout: " + line);
+                        }
+
+                        try {
+                            int exitCode = pr.exitValue();
+                            System.out.println("exit code: " + exitCode);
+                            // if we get here then the process finished executing
+                            break;
+                        } catch (IllegalThreadStateException e) {
+//                            e.printStackTrace();
+                        }
+                        // wait 200ms and try again
+                        Thread.sleep(200);
+                    } catch (InterruptedException | IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }).start();
+
+        final BufferedReader stderrReader = new BufferedReader(
                 new InputStreamReader(pr.getErrorStream()));
-        while ((line = stderrReader.readLine()) != null) {
-            System.err.println(line);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        while (stderrReader.ready()) {
+                            String line = stderrReader.readLine();
+                            System.err.println("stderr: " + line);
+                        }
+                        try {
+                            int exitCode = pr.exitValue();
+                            System.out.println("exit code: " + exitCode);
+                            // if we get here then the process finished executing
+                            break;
+                        } catch (IllegalThreadStateException e) {
+//                            e.printStackTrace();
+                        }
+                        // wait 200ms and try again
+                        Thread.sleep(200);
+                    } catch (InterruptedException | IOException e) {
+                        e.printStackTrace();
+                    }
 
-        int retValue = pr.exitValue();
-        System.out.println("return value: " + retValue);
+                }
+            }
+        }).start();
+
 
         // transfer apk back to the phone
     }
