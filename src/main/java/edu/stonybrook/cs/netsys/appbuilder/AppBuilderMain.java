@@ -43,57 +43,7 @@ import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
 import edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil;
 import sun.security.ssl.Debug;
 
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ACTIVITY_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.APP_NAME_TEXT;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.APP_TAG_IN_TEMPLATE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAYS_FILE_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAY_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ARRAY_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.BUILD_GRADLE_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.CODE_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.CONFIG_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.DRAWABLE_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.DRAWABLE_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.IC_LAUNCHER;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ID_VALUE_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.IMAGE_ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.INTEGER_ARRAY_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ITEM_LAYOUTS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ITEM_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.ITEM_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAUNCHER_ICON_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUTS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.LAYOUT_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.MANIFEST_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.MANIFEST_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.OUTPUT_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_ID_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_ITEM_VIEW_ID_ARRAY_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_VIEW_IDS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PHONE_VIEW_ID_ARRAY_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PREFS_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.PREF_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RESOURCES_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RES_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RULE_DIR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.RULE_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRINGS_FILE_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_ARRAY_TAG;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.STRING_PREFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.TEMPLATE_FOLDER_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.TEXT_ATTR_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.UIWEAR_ACTIVITY_LAYOUT_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.UIWEAR_DEFAULT_ICON_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.VALUES_PATH;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_APP_ENV_FOLDER_NAME;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_ID_SUFFIX;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_ITEM_VIEW_ID_ARRAY_VALUE;
-import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.WEAR_VIEW_ID_ARRAY_VALUE;
+import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.*;
 import static edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil.serializeMapToFile;
 
 /**
@@ -147,7 +97,7 @@ public class AppBuilderMain {
     private static HashMap<String, ArrayList<String>> wearItemViewIdIndexMap = new HashMap<>();
     private static HashMap<String, ArrayList<String>> phoneItemViewIdIndexMap = new HashMap<>();
 
-    private static final String pkgName = "com.bandlab.bandlab";
+    private static final String pkgName = "com.musicplayer.player.mp3player.white";
 
     static {
         try {
@@ -407,7 +357,7 @@ public class AppBuilderMain {
         String[] buildApkCmd = new String[]{"bash", "-c", "cd `pwd`/" + outputPath
                 + " && ./gradlew build"};
         Runtime run = Runtime.getRuntime();
-       final Process pr = run.exec(buildApkCmd);
+        final Process pr = run.exec(buildApkCmd);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -665,11 +615,16 @@ public class AppBuilderMain {
                             element.setAttribute(TEXT_ATTR_NAME, textAttrValue);
                         }
                         if (imageAttrValue != null) {
+                            String name = element.getNodeName();
                             if (isDebug) {
-                                System.out.println("element: " + element.getNodeName());
+                                System.out.println("element: " + name);
                                 System.out.println("imageAttrValue: " + imageAttrValue);
                             }
-                            element.setAttribute(IMAGE_ATTR_NAME, imageAttrValue);
+                            if (name.endsWith("CircularButton") || name.endsWith("ImageView")) {
+                                element.setAttribute(IMAGE_SRC_ATTR_NAME, imageAttrValue);
+                            } else {
+                                element.setAttribute(IMAGE_BG_ATTR_NAME, imageAttrValue);
+                            }
                         }
 
                     }

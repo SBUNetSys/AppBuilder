@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout>
+    <ImageView/>
+    <LinearLayout>
+        <ImageButton from="com.musicplayer.player.mp3player.white:id/btn_prev" to="btn_prev"  />
+        <ImageButton from="com.musicplayer.player.mp3player.white:id/btn_play" to="btn_play"  />
+        <ImageButton from="com.musicplayer.player.mp3player.white:id/btn_nxt" to="btn_nxt" />
+    </LinearLayout>
+    <SeekBar/>
+    <TextView from="com.musicplayer.player.mp3player.white:id/title" to="txt_title">
+        <text>Title</text>
+    </TextView>
+    <TextView from="com.musicplayer.player.mp3player.white:id/artist" to="txt_album">
+        <text>Album or artist</text>
+    </TextView>
+</RelativeLayout>

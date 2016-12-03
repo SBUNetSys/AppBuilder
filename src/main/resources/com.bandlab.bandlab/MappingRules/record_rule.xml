@@ -3,6 +3,6 @@
     <android.support.wearable.view.CircularButton from="com.bandlab.bandlab:id/sme_record"
                                                   to="action_button" />
     <TextView from="com.bandlab.bandlab:id/sme_timer" to="action_title">
-        <text>00:00</text>
+        <text>Record</text>
     </TextView>
 </android.support.wearable.view.BoxInsetLayout>

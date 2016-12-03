@@ -45,7 +45,8 @@ public class Constants {
     public static final String ID_VALUE_PREFIX = "@+id/";
     public static final String ID_ATTR_NAME = "android:id";
     public static final String TEXT_ATTR_NAME = "android:text";
-    public static final String IMAGE_ATTR_NAME = "android:background";
+    public static final String IMAGE_BG_ATTR_NAME = "android:background";
+    public static final String IMAGE_SRC_ATTR_NAME = "android:src";
 
     public static final String LAYOUT_PREFIX = "@layout/";
     public static final String ARRAY_PREFIX = "@array/";

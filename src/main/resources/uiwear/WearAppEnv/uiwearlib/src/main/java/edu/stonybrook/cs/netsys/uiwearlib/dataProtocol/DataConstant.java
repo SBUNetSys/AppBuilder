@@ -26,5 +26,5 @@ public class DataConstant {
     public static final String CLICK_PATH = "/CLICK_PATH";
     public static final String CLICK_ID_KEY = "CLICK_ID_KEY";
     public static final String PKG_KEY = "PKG_KEY";
-
+    public static final String CACHE_STATUS_KEY = "CACHE_STATUS_KEY";
 }
