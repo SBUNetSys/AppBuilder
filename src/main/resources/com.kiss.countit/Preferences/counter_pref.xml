@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.kiss.countit:id/tv_title</id>
+    <rect>400 432 680 497</rect>
+  </node>
+  <node>
+    <id>com.kiss.countit:id/tv_value</id>
+    <rect>522 497 558 582</rect>
+  </node>
+  <node>
+    <id>com.kiss.countit:id/iv_decrement</id>
+    <rect>0 393 228 621</rect>
+  </node>
+  <node>
+    <id>com.kiss.countit:id/iv_increment</id>
+    <rect>852 393 1080 621</rect>
+  </node>
+</nodes>

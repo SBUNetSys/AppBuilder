@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.neurondigital.exercisetimer:id/circle_bar</id>
+    <rect>60 240 1020 1596</rect>
+  </node>
+</nodes>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.anghami:id/tv_song_name</id>
+    <rect>154 198 925 255</rect>
+  </node>
+  <node>
+    <id>com.anghami:id/tv_album_artist</id>
+    <rect>154 264 925 321</rect>
+  </node>
+  <node>
+    <id>com.anghami:id/bt_play</id>
+    <rect>450 1309 630 1489</rect>
+  </node>
+  <node>
+    <id>com.anghami:id/bt_previous</id>
+    <rect>237 1324 387 1474</rect>
+  </node>
+  <node>
+    <id>com.anghami:id/bt_next</id>
+    <rect>693 1324 843 1474</rect>
+  </node>
+</nodes>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.urbandroid.sleep:id/menu_item_pause</id>
+    <rect>648 84 792 228</rect>
+  </node>
+</nodes>

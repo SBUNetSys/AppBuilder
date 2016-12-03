@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.appgeneration.itunerfree:id/ib_sp_detail_play</id>
+    <rect>465 1051 615 1201</rect>
+  </node>
+  <node>
+    <id>com.appgeneration.itunerfree:id/ib_sp_station_favs</id>
+    <rect>0 1051 150 1201</rect>
+  </node>
+</nodes>

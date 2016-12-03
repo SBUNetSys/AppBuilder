@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.endomondo.android:id/ButtonStartPauseBackground</id>
+    <rect>48 1188 408 1548</rect>
+  </node>
+  <node>
+    <id>com.endomondo.android:id/ButtonCountdownStopFront</id>
+    <rect>318 1368 498 1548</rect>
+  </node>
+</nodes>
