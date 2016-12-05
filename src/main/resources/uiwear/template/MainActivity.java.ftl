@@ -194,7 +194,15 @@ public class MainActivity extends Activity {
         String phoneViewId = node.getViewId();
         Logger.i("phoneViewId: " + phoneViewId);
 
-        int index = Arrays.asList(phoneViewIds).indexOf(phoneViewId);
+        int index = -1;
+        List<String> phoneViewIdList = Arrays.asList(phoneViewIds);
+        for (int i = 0; i < phoneViewIdList.size(); i++) {
+            String viewId = phoneViewIdList.get(i);
+            if (phoneViewId.contains(viewId)) {
+                index = i;
+                break;
+            }
+        }
         if (index == -1) {
             Logger.w("cannot find wear id index for phoneViewId: " + phoneViewId);
             return;

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+    <ImageView from="com.appgeneration.itunerfree:id/iv_sp_artwork" to="iv_metadata"/>
+    <ImageButton from="com.appgeneration.itunerfree:id/ib_sp_detail_play" to="ib_player_play"/>
+    <ImageButton from="com.appgeneration.itunerfree:id/ib_sp_station_favs" to="ib_player_fav">
+        <image>sp_icon_favs.png</image>
+    </ImageButton>
+    <TextView from="com.appgeneration.itunerfree:id/tv_sp_detail_title" to="tv_metadata_title">
+        <text>Title</text>
+    </TextView>
+    <TextView from="com.appgeneration.itunerfree:id/tv_sp_detail_subtitle" to="tv_metadata_subtitle">
+        <text>Subtitle</text>
+    </TextView>
+</Rule>

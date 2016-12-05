@@ -10,7 +10,7 @@
                 <ImageView from="none" to="previous">
                     <image>previous.png</image>
                 </ImageView>
-                <ImageView from="com.uramaks.music.player:id/play" to="play">
+                <ImageView from="com.uramaks.music.player:id/play | com.uramaks.music.player:id/pause" to="play">
                     <image>play.png</image>
                 </ImageView>
                 <ImageView from="com.uramaks.music.player:id/next" to="next">

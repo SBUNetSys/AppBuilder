@@ -82,12 +82,15 @@ public class XmlUtil {
                     String text = readInfo(parser, TEXT_TAG);
 //                    System.out.println("text:" + text);
                     info.setTextInfo(text);
+                    parser.nextTag();
+                    name = parser.getName();
                 }
 
                 if (IMAGE_TAG.equals(name)) {
                     String image = readInfo(parser, IMAGE_TAG);
 //                    System.out.println("image:" + image);
                     info.setImageInfo(image);
+                    parser.nextTag();
                 }
 
 //                System.out.println("info: " + info);

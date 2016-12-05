@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@android:color/transparent">
+
+  <ImageView
+          android:id="@+id/iv_metadata"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:adjustViewBounds="true"
+          android:background="@android:color/transparent"
+          android:scaleType="fitCenter" />
+
+  <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:orientation="vertical"
+          android:weightSum="2.0">
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:gravity="bottom|center"
+            android:orientation="horizontal">
+
+      <FrameLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="10.0dip"
+              android:layout_marginEnd="5.0dip">
+
+        <ImageButton
+                android:id="@+id/ib_player_play"
+                android:layout_width="50.0dip"
+                android:layout_height="50.0dip"
+                android:adjustViewBounds="true"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:color="#ffae3131"
+                android:src="@android:drawable/ic_media_play"
+                android:tint="@android:color/white" />
+      </FrameLayout>
+
+      <ImageButton
+              android:id="@+id/ib_player_fav"
+              android:layout_width="50.0dip"
+              android:layout_height="50.0dip"
+              android:layout_marginBottom="10.0dip"
+              android:layout_marginStart="5.0dip"
+              android:adjustViewBounds="true"
+              android:background="@android:color/transparent"
+              android:scaleType="fitCenter"
+              android:color="#ffae3131"
+              android:tint="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:background="#bb000000"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="15.0dip"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:paddingTop="15.0dip">
+
+      <TextView
+              android:id="@+id/tv_metadata_title"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:ellipsize="end"
+              android:gravity="center"
+              android:maxLines="1"
+              android:textColor="@color/white"
+              android:textSize="17.0sp"
+              android:textStyle="bold" />
+
+      <TextView
+              android:id="@+id/tv_metadata_subtitle"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:ellipsize="end"
+              android:gravity="center"
+              android:maxLines="1"
+              android:textColor="@android:color/white"
+              android:textSize="16.0sp" />
+    </LinearLayout>
+  </LinearLayout>
+</RelativeLayout>

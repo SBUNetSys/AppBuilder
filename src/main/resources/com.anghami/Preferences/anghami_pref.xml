@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <nodes>
+ <node>
+    <id>com.anghami:id/iv_album_cover</id>
+    <rect>155 376 925 1146</rect>
+  </node>
   <node>
     <id>com.anghami:id/tv_song_name</id>
     <rect>154 198 925 255</rect>

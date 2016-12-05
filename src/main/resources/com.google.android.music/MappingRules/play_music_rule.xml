@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Card style="default">
+    <Title from="com.google.android.music:id/trackname" to="title">
+        <text>Song title</text>
+    </Title>
+    <Description from="com.google.android.music:id/artistname" to="text">
+        <text>Album artist</text>
+    </Description>
+    <Icon from="com.google.android.music:id/play_pause_header" to="icon">
+        <image>btn_play.png</image>
+    </Icon>
+    <Background from="com.google.android.music:id/album_small" to="card">
+        <image>bg_default_album_art.png</image>
+    </Background>
+</Card>

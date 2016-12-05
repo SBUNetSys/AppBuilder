@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.google.android.music:id/album_small</id>
+    <rect>24 1608 168 1752</rect>
+  </node>
+  <node>
+    <id>com.google.android.music:id/artistname</id>
+    <rect>192 1688 492 1737</rect>
+  </node>
+  <node>
+    <id>com.google.android.music:id/trackname</id>
+    <rect>192 1623 431 1688</rect>
+  </node>
+  <node>
+    <id>com.google.android.music:id/play_pause_header</id>
+    <rect>864 1608 1056 1752</rect>
+  </node>
+</nodes>

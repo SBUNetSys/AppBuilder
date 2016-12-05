@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>biz.mobidev.mdplayer:id/text_track_title</id>
+    <rect>394 1339 685 1411</rect>
+  </node>
+  <node>
+    <id>biz.mobidev.mdplayer:id/text_track_artist</id>
+    <rect>395 1435 684 1500</rect>
+  </node>
+  <node>
+    <id>biz.mobidev.mdplayer:id/btn_pause_playback_fragment</id>
+    <rect>449 1570 629 1750</rect>
+  </node>
+  <node>
+    <id>biz.mobidev.mdplayer:id/btn_ffwd_playback_fragment</id>
+    <rect>703 1576 871 1744</rect>
+  </node>
+  <node>
+    <id>biz.mobidev.mdplayer:id/image</id>
+    <rect>0 216 1080 1305</rect>
+  </node>
+</nodes>

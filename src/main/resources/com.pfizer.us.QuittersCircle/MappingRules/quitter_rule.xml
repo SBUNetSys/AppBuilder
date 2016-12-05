@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+    <TextView from="none" to="lblTitle">
+        <text>Cigarettes Smoked:</text>
+    </TextView>
+    <TextView from="com.pfizer.us.QuittersCircle:id/cig_count_txt" to="lblCigCounter">
+        <text>0</text>
+    </TextView>
+    <TextView from="com.pfizer.us.QuittersCircle:id/cig_minus_btn" to="btnStart">
+        <text>-</text>
+        <image>cigarette_button_background.xml</image>
+    </TextView>
+    <TextView from="com.pfizer.us.QuittersCircle:id/cig_plus_btn" to="btnEnd">
+        <text>+</text>
+        <image>cigarette_button_background.xml</image>
+    </TextView>
+</Rule>

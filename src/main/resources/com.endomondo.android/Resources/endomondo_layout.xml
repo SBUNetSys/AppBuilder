@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:background="@color/white"
+             android:orientation="vertical">
+
+  <ImageView
+          android:id="@+id/logo"
+          android:layout_width="125.0dip"
+          android:layout_height="25.0dip"
+          android:layout_gravity="center|top"
+          android:layout_marginTop="20.0dip"
+          android:clickable="false"
+          android:scaleType="fitCenter" />
+
+  <FrameLayout
+          android:id="@+id/ButtonStartPause"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center">
+    <ImageButton
+            android:id="@+id/ButtonStartPauseFront"
+            android:layout_width="80.0dip"
+            android:layout_height="80.0dip"
+            android:layout_margin="16.0dip" />
+  </FrameLayout>
+
+  <FrameLayout
+          android:id="@+id/ButtonStop"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginLeft="40.0dip"
+          android:layout_marginTop="20.0dip">
+
+    <ImageButton
+            android:id="@+id/ButtonStopFront"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:layout_margin="16.0dip" />
+  </FrameLayout>
+
+  <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:layout_marginBottom="10.0dip"
+          android:orientation="horizontal"
+          android:paddingLeft="18.0dip"
+          android:paddingRight="18.0dip"
+          android:weightSum="1.0">
+
+    <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center|left">
+
+      <ImageView
+              android:id="@+id/gps_status"
+              android:layout_width="24.0dip"
+              android:layout_height="24.0dip"
+              android:clickable="true" />
+    </FrameLayout>
+
+    <TextView
+            android:id="@+id/gps_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom|center|left"
+            android:layout_marginLeft="2.0dip"
+            android:clickable="false"
+            android:ellipsize="marquee"
+            android:gravity="bottom"
+            android:text="GPS"
+            android:textColor="#ffe6701c"
+            android:textSize="12.0dip" />
+
+    <View
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" />
+
+    <RelativeLayout
+            android:id="@+id/sport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center|right">
+
+      <ImageView
+              android:id="@+id/SportIcon"
+              android:layout_width="32.0dip"
+              android:layout_height="32.0dip"
+              android:layout_centerInParent="true"
+              android:layout_gravity="center_vertical"/>
+    </RelativeLayout>
+  </LinearLayout>
+</FrameLayout>

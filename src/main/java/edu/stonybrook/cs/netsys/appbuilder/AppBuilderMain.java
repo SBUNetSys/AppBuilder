@@ -9,6 +9,7 @@ import net.lingala.zip4j.exception.ZipException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,10 +24,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermission;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -41,7 +39,6 @@ import edu.stonybrook.cs.netsys.appbuilder.data.App;
 import edu.stonybrook.cs.netsys.appbuilder.data.Info;
 import edu.stonybrook.cs.netsys.appbuilder.data.RuleInfo;
 import edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil;
-import sun.security.ssl.Debug;
 
 import static edu.stonybrook.cs.netsys.appbuilder.data.Constants.*;
 import static edu.stonybrook.cs.netsys.appbuilder.utils.XmlUtil.serializeMapToFile;
@@ -97,7 +94,7 @@ public class AppBuilderMain {
     private static HashMap<String, ArrayList<String>> wearItemViewIdIndexMap = new HashMap<>();
     private static HashMap<String, ArrayList<String>> phoneItemViewIdIndexMap = new HashMap<>();
 
-    private static final String pkgName = "com.musicplayer.player.mp3player.white";
+    private static ArrayList<String> appPkgNames = new ArrayList<>();
 
     static {
         try {
@@ -112,323 +109,356 @@ public class AppBuilderMain {
         // step 1, new thread handle received file, pkgName.zip, unzip and put to temp folder
         String receivedFileSavedPath = "src/main/resources/";
         if (isDebug) {
-            System.out.println("pkgName: " + pkgName);
+            new File(receivedFileSavedPath).listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    if (name.startsWith("com.")) {
+                        appPkgNames.add(name);
+                    }
+                    return false;
+                }
+            });
+            appPkgNames.clear();
+            appPkgNames.add("com.endomondo.android");
+
+            System.out.println("files: " + appPkgNames);
             System.out.println();
         }
-        String appOutPath = unzippedFileDest + pkgName + File.separator + OUTPUT_DIR_NAME;
-        if (isDebug) {
-            System.out.println("appOutPath: " + appOutPath);
-            System.out.println();
-        }
 
-        File appFilesTempFoler = new File(unzippedFileDest + pkgName);
-        if (appFilesTempFoler.exists()) {
-            FileUtils.deleteDirectory(appFilesTempFoler);
-        }
-
-        if (isDebug) {
-            FileUtils.copyDirectoryToDirectory(new File(receivedFileSavedPath + pkgName),
-                    new File(unzippedFileDest));
-        } else {
-            // extract zip file to temp folder
-            try {
-                String fileName = pkgName + ".zip";
-                ZipFile zipFile = new ZipFile(receivedFileSavedPath + fileName);
-                zipFile.extractAll(unzippedFileDest);
-            } catch (ZipException e) {
-                e.printStackTrace();
-            }
-        }
-
-        FileUtils.copyDirectory(new File(WEAR_APP_ENV_FOLDER_NAME), new File(appOutPath));
-        Set<PosixFilePermission> permissionsSet = new HashSet<>();
-        permissionsSet.add(PosixFilePermission.OWNER_READ);
-        permissionsSet.add(PosixFilePermission.OWNER_WRITE);
-        permissionsSet.add(PosixFilePermission.OWNER_EXECUTE);
-        permissionsSet.add(PosixFilePermission.GROUP_READ);
-        permissionsSet.add(PosixFilePermission.GROUP_EXECUTE);
-        permissionsSet.add(PosixFilePermission.OTHERS_READ);
-        permissionsSet.add(PosixFilePermission.OTHERS_EXECUTE);
-        Files.setPosixFilePermissions(Paths.get(appOutPath, "gradlew"), permissionsSet);
-        String outputPath = appOutPath;
-        appOutPath += "/app/";
-
-        String appNameFilePath = Paths.get(unzippedFileDest, pkgName,
-                CONFIG_DIR_NAME, APP_NAME_TEXT).toString();
-
-        String appName = FileUtils.readFileToString(new File(appNameFilePath),
-                Charset.defaultCharset());
-        if (isDebug) {
-            System.out.println("appName: " + appName);
-            System.out.println();
-        }
-        stringMap.put("app_name", appName);
-        // step 2, start parsing below code starts here
-
-        // generate project files based on templates
-        HashMap<String, Object> root = new HashMap<>();
-        App wearApp = new App();
-        wearApp.setAppName(appName);
-        wearApp.setAppPkgName(pkgName);
-        root.put(APP_TAG_IN_TEMPLATE, wearApp);
-
-        // just for test
-        if (isDebug) {
-            for (String templateName : TEMPLATES) {
-                Template temp = configuration.getTemplate(templateName);
-                Writer out = new OutputStreamWriter(System.out);
-                temp.process(root, out);
-            }
-        }
-
-        // process build.gradle
-        Template buildGradleTemplate = configuration.getTemplate(BUILD_GRADLE_NAME);
-        File buildGradleFile = new File(appOutPath, FilenameUtils.getBaseName(BUILD_GRADLE_NAME));
-        FileUtils.touch(buildGradleFile);
-        buildGradleTemplate.process(root, new FileWriter(buildGradleFile));
-
-        // process MainActivity
-        Template mainActivityTemplate = configuration.getTemplate(ACTIVITY_NAME);
-        File mainActivityFile = new File(appOutPath + CODE_PATH + pkgName.replace(".", "/"),
-                FilenameUtils.getBaseName(ACTIVITY_NAME));
-        FileUtils.touch(mainActivityFile);
-        mainActivityTemplate.process(root, new FileWriter(mainActivityFile));
-
-        // process AndroidManifest.xml
-        Template manifestTemplate = configuration.getTemplate(MANIFEST_NAME);
-        File manifestFile = new File(appOutPath + MANIFEST_PATH,
-                FilenameUtils.getBaseName(MANIFEST_NAME));
-        FileUtils.touch(manifestFile);
-        manifestTemplate.process(root, new FileWriter(manifestFile));
-
-
-        // process launcher icon and activity_main.xml
-        File launcherIconFile = new File(Paths.get(unzippedFileDest, pkgName,
-                CONFIG_DIR_NAME, IC_LAUNCHER).toString());
-        File launcherIconDestFile = new File(appOutPath + LAUNCHER_ICON_PATH + IC_LAUNCHER);
-        if (launcherIconFile.exists()) {
-            FileUtils.copyFile(launcherIconFile, launcherIconDestFile);
-        } else {
-            //copy default icon
-            FileUtils.copyFile(new File(UIWEAR_DEFAULT_ICON_PATH), launcherIconDestFile);
-        }
-
-        File mainLayoutFile = new File(UIWEAR_ACTIVITY_LAYOUT_PATH);
-        File mainLayoutDestFile = new File(appOutPath + LAYOUT_PATH);
-        FileUtils.copyFileToDirectory(mainLayoutFile, mainLayoutDestFile);
-
-        /*** below code relies on parsing both mapping rules and layout xml files ***/
-        // pre-process mapping rules for generating xml layout like card type
-
-
-        // process mapping rules and layout xml to set string values and drawable resources
-        File mappingRuleDir = new File(Paths.get(unzippedFileDest, pkgName, RULE_DIR_NAME)
-                .toString());
-        File[] mappingRuleFiles = mappingRuleDir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return FilenameUtils.getBaseName(name).endsWith(RULE_SUFFIX);
-            }
-        });
-
-        assert mappingRuleFiles != null;
-        for (File mappingRuleFile : mappingRuleFiles) {
-            ArrayList<RuleInfo> infoList = XmlUtil.parseMappingRule(mappingRuleFile);
-
-            File layoutOutputFile = new File(appOutPath + LAYOUT_PATH,
-                    mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX));
-            // copy updated layout files to output
-            FileUtils.copyFile(new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME)
-                            .toString(), mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX)),
-                    layoutOutputFile);
-
-            ArrayList<String> wearViewIds = new ArrayList<>();
-            ArrayList<String> phoneViewIds = new ArrayList<>();
-
-            for (RuleInfo ruleInfo : infoList) {
-                String wearViewId = ruleInfo.getWearViewId();
-                if (!wearViewIds.contains(wearViewId)) {
-                    if (isDebug) {
-                        System.out.println("wearViewId add: " + ID_PREFIX + wearViewId);
-                    }
-                    wearViewIds.add(ID_PREFIX + wearViewId);
-                }
-
-                String phoneViewId = ruleInfo.getPhoneViewId();
-                if (!phoneViewIds.contains(phoneViewId)) {
-                    if (isDebug) {
-                        System.out.println("phoneViewId add: " + phoneViewId);
-                    }
-                    phoneViewIds.add(phoneViewId);
-                }
-
-                if (ruleInfo.isListView()) {
-                    phoneItemViewIds.add(phoneViewId);
-                }
-
-                String text = ruleInfo.getTextInfo();
-                Info changedInfo = new Info();
-
-                if (text != null) {
-                    String entryName = FilenameUtils.removeExtension(layoutOutputFile.getName())
-                            + "_" + wearViewId;
-                    // put text to stringMap
-                    stringMap.put(entryName, text);
-                    // find the node with id and set text
-                    String value = STRING_PREFIX + entryName;
-                    changedInfo.setText(value);
-
-//                    findViewIdSetInfo(layoutOutPutFolder, wearViewId, value);
-                }
-
-                String image = ruleInfo.getImageInfo();
-                if (image != null) {
-                    // if image file exists
-                    File imageFile = new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME)
-                            .toString(), image);
-                    if (!imageFile.exists()) {
-                        continue;
-                    }
-                    // copy to drawable folder
-                    FileUtils.copyFileToDirectory(imageFile, new File(appOutPath + DRAWABLE_PATH));
-                    // find the node with id and set image
-                    String value = DRAWABLE_PREFIX + FilenameUtils.removeExtension(image);
-                    changedInfo.setImage(value);
-//                    findViewIdSetInfo(layoutOutPutFolder, wearViewId, value);
-                }
-
-                idInfoMap.put(ID_VALUE_PREFIX + wearViewId, changedInfo);
-            }
-
-            // set text and image info to layout file at once
-            updateLayout(layoutOutputFile, idInfoMap);
+        for (String pkgName : appPkgNames) {
+            stringMap.clear();
             idInfoMap.clear();
+            prefs.clear();
 
-            String prefName = FilenameUtils.removeExtension(mappingRuleFile.getName())
-                    .replace(RULE_SUFFIX, PREF_SUFFIX);
+            layouts.clear();
+            wearViewIdArray.clear();
+            phoneViewIdArray.clear();
+
+            wearViewIdIndexMap.clear();
+            phoneViewIdIndexMap.clear();
+            phoneItemViewIds.clear();
+
+            itemLayouts.clear();
+            wearItemViewIdArray.clear();
+            phoneItemViewIdArray.clear();
+
+            wearItemViewIdIndexMap.clear();
+            phoneItemViewIdIndexMap.clear();
+            long buildStart = System.currentTimeMillis();
+            String appOutPath = unzippedFileDest + pkgName + File.separator + OUTPUT_DIR_NAME;
             if (isDebug) {
+                System.out.println("appOutPath: " + appOutPath);
                 System.out.println();
-                System.out.println("infoList: " + infoList);
-                System.out.println("mappingRule: " + mappingRuleFile);
-                System.out.println("prefName: " + prefName);
-                System.out.println("layoutFile: " + layoutOutputFile);
             }
 
-            String layoutName = LAYOUT_PREFIX + FilenameUtils.removeExtension(layoutOutputFile
-                    .getName());
-            String wearIdName = ARRAY_PREFIX + prefName + WEAR_ID_SUFFIX;
-            String phoneIdName = ARRAY_PREFIX + prefName + PHONE_ID_SUFFIX;
+            File appFilesTempFoler = new File(unzippedFileDest + pkgName);
+            if (appFilesTempFoler.exists()) {
+                FileUtils.deleteDirectory(appFilesTempFoler);
+            }
+
             if (isDebug) {
-                System.out.println(prefName);
-                System.out.println(layoutName);
-                System.out.println(wearIdName);
-                System.out.println(phoneIdName);
-            }
-
-            if (!prefName.endsWith(ITEM_SUFFIX + PREF_SUFFIX)) {
-                prefs.add(prefName);
-            }
-
-            if (prefName.endsWith(ITEM_SUFFIX + PREF_SUFFIX)) {
-                itemLayouts.add(layoutName);
-                wearItemViewIdArray.add(wearIdName);
-                phoneItemViewIdArray.add(phoneIdName);
-                wearItemViewIdIndexMap.put(prefName + WEAR_ID_SUFFIX, wearViewIds);
-                phoneItemViewIdIndexMap.put(prefName + PHONE_ID_SUFFIX, phoneViewIds);
-                System.out.println();
+                FileUtils.copyDirectoryToDirectory(new File(receivedFileSavedPath + pkgName),
+                        new File(unzippedFileDest));
             } else {
-                layouts.add(layoutName);
-                wearViewIdArray.add(wearIdName);
-                phoneViewIdArray.add(phoneIdName);
-                wearViewIdIndexMap.put(prefName + WEAR_ID_SUFFIX, wearViewIds);
-                phoneViewIdIndexMap.put(prefName + PHONE_ID_SUFFIX, phoneViewIds);
-            }
-        }
-
-        // write stringMap to strings.xml
-        File stringsFile = new File(appOutPath + VALUES_PATH, STRINGS_FILE_NAME);
-        serializeMapToFile(stringMap, stringsFile);
-
-        // process mapping rules and layout xml to generate arrays.xml files
-        File arraysFile = new File(appOutPath + VALUES_PATH, ARRAYS_FILE_NAME);
-        generateArraysXmlFile(arraysFile);
-
-        // put all together, copy app project to WearAppEnv folder to start building apk
-        String[] buildApkCmd = new String[]{"bash", "-c", "cd `pwd`/" + outputPath
-                + " && ./gradlew build"};
-        Runtime run = Runtime.getRuntime();
-        final Process pr = run.exec(buildApkCmd);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+                // extract zip file to temp folder
                 try {
-                    pr.waitFor();
-                } catch (InterruptedException e) {
+                    String fileName = pkgName + ".zip";
+                    ZipFile zipFile = new ZipFile(receivedFileSavedPath + fileName);
+                    zipFile.extractAll(unzippedFileDest);
+                } catch (ZipException e) {
                     e.printStackTrace();
                 }
             }
-        }).start();
 
-        final BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        while (stdoutReader.ready()) {
-                            String line = stdoutReader.readLine();
-                            System.out.println("stdout: " + line);
-                        }
+            FileUtils.copyDirectory(new File(WEAR_APP_ENV_FOLDER_NAME), new File(appOutPath));
+            Set<PosixFilePermission> permissionsSet = new HashSet<>();
+            permissionsSet.add(PosixFilePermission.OWNER_READ);
+            permissionsSet.add(PosixFilePermission.OWNER_WRITE);
+            permissionsSet.add(PosixFilePermission.OWNER_EXECUTE);
+            permissionsSet.add(PosixFilePermission.GROUP_READ);
+            permissionsSet.add(PosixFilePermission.GROUP_EXECUTE);
+            permissionsSet.add(PosixFilePermission.OTHERS_READ);
+            permissionsSet.add(PosixFilePermission.OTHERS_EXECUTE);
+            Files.setPosixFilePermissions(Paths.get(appOutPath, "gradlew"), permissionsSet);
+            String outputPath = appOutPath;
+            appOutPath += "/app/";
 
-                        try {
-                            int exitCode = pr.exitValue();
-                            System.out.println("exit code: " + exitCode);
-                            // if we get here then the process finished executing
-                            break;
-                        } catch (IllegalThreadStateException e) {
-//                            e.printStackTrace();
-                        }
-                        // wait 200ms and try again
-                        Thread.sleep(200);
-                    } catch (InterruptedException | IOException e) {
-                        e.printStackTrace();
-                    }
+            String appNameFilePath = Paths.get(unzippedFileDest, pkgName,
+                    CONFIG_DIR_NAME, APP_NAME_TEXT).toString();
 
+            String appName = FileUtils.readFileToString(new File(appNameFilePath),
+                    Charset.defaultCharset());
+            if (isDebug) {
+                System.out.println("appName: " + appName);
+                System.out.println();
+            }
+            stringMap.put("app_name", appName);
+            // step 2, start parsing below code starts here
+
+            // generate project files based on templates
+            HashMap<String, Object> root = new HashMap<>();
+            App wearApp = new App();
+            wearApp.setAppName(appName);
+            wearApp.setAppPkgName(pkgName);
+            root.put(APP_TAG_IN_TEMPLATE, wearApp);
+
+            // just for test
+            if (isDebug) {
+                for (String templateName : TEMPLATES) {
+                    Template temp = configuration.getTemplate(templateName);
+                    Writer out = new OutputStreamWriter(System.out);
+                    temp.process(root, out);
                 }
             }
-        }).start();
 
-        final BufferedReader stderrReader = new BufferedReader(
-                new InputStreamReader(pr.getErrorStream()));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        while (stderrReader.ready()) {
-                            String line = stderrReader.readLine();
-                            System.err.println("stderr: " + line);
+            // process build.gradle
+            Template buildGradleTemplate = configuration.getTemplate(BUILD_GRADLE_NAME);
+            File buildGradleFile = new File(appOutPath, FilenameUtils.getBaseName(BUILD_GRADLE_NAME));
+            FileUtils.touch(buildGradleFile);
+            buildGradleTemplate.process(root, new FileWriter(buildGradleFile));
+
+            // process MainActivity
+            Template mainActivityTemplate = configuration.getTemplate(ACTIVITY_NAME);
+            File mainActivityFile = new File(appOutPath + CODE_PATH + pkgName.replace(".", "/"),
+                    FilenameUtils.getBaseName(ACTIVITY_NAME));
+            FileUtils.touch(mainActivityFile);
+            mainActivityTemplate.process(root, new FileWriter(mainActivityFile));
+
+            // process AndroidManifest.xml
+            Template manifestTemplate = configuration.getTemplate(MANIFEST_NAME);
+            File manifestFile = new File(appOutPath + MANIFEST_PATH,
+                    FilenameUtils.getBaseName(MANIFEST_NAME));
+            FileUtils.touch(manifestFile);
+            manifestTemplate.process(root, new FileWriter(manifestFile));
+
+
+            // process launcher icon and activity_main.xml
+            File launcherIconFile = new File(Paths.get(unzippedFileDest, pkgName,
+                    CONFIG_DIR_NAME, IC_LAUNCHER).toString());
+            File launcherIconDestFile = new File(appOutPath + LAUNCHER_ICON_PATH + IC_LAUNCHER);
+            if (launcherIconFile.exists()) {
+                FileUtils.copyFile(launcherIconFile, launcherIconDestFile);
+            } else {
+                //copy default icon
+                FileUtils.copyFile(new File(UIWEAR_DEFAULT_ICON_PATH), launcherIconDestFile);
+            }
+
+            File mainLayoutFile = new File(UIWEAR_ACTIVITY_LAYOUT_PATH);
+            File mainLayoutDestFile = new File(appOutPath + LAYOUT_PATH);
+            FileUtils.copyFileToDirectory(mainLayoutFile, mainLayoutDestFile);
+
+            /*** below code relies on parsing both mapping rules and layout xml files ***/
+            // pre-process mapping rules for generating xml layout like card type
+
+
+            // process mapping rules and layout xml to set string values and drawable resources
+            File mappingRuleDir = new File(Paths.get(unzippedFileDest, pkgName, RULE_DIR_NAME)
+                    .toString());
+            File[] mappingRuleFiles = mappingRuleDir.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return FilenameUtils.getBaseName(name).endsWith(RULE_SUFFIX);
+                }
+            });
+
+            assert mappingRuleFiles != null;
+            for (File mappingRuleFile : mappingRuleFiles) {
+                ArrayList<RuleInfo> infoList = XmlUtil.parseMappingRule(mappingRuleFile);
+
+                File layoutOutputFile = new File(appOutPath + LAYOUT_PATH,
+                        mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX));
+                // copy updated layout files to output
+                FileUtils.copyFile(new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME)
+                                .toString(), mappingRuleFile.getName().replace(RULE_SUFFIX, LAYOUT_SUFFIX)),
+                        layoutOutputFile);
+
+                ArrayList<String> wearViewIds = new ArrayList<>();
+                ArrayList<String> phoneViewIds = new ArrayList<>();
+
+                for (RuleInfo ruleInfo : infoList) {
+                    String wearViewId = ruleInfo.getWearViewId();
+                    if (!wearViewIds.contains(wearViewId)) {
+                        if (isDebug) {
+                            System.out.println("wearViewId add: " + ID_PREFIX + wearViewId);
                         }
-                        try {
-                            int exitCode = pr.exitValue();
-                            System.out.println("exit code: " + exitCode);
-                            // if we get here then the process finished executing
-                            break;
-                        } catch (IllegalThreadStateException e) {
-//                            e.printStackTrace();
-                        }
-                        // wait 200ms and try again
-                        Thread.sleep(200);
-                    } catch (InterruptedException | IOException e) {
-                        e.printStackTrace();
+                        wearViewIds.add(ID_PREFIX + wearViewId);
                     }
 
+                    String phoneViewId = ruleInfo.getPhoneViewId();
+                    if (!phoneViewIds.contains(phoneViewId)) {
+                        if (isDebug) {
+                            System.out.println("phoneViewId add: " + phoneViewId);
+                        }
+                        phoneViewIds.add(phoneViewId);
+                    }
+
+                    if (ruleInfo.isListView()) {
+                        phoneItemViewIds.add(phoneViewId);
+                    }
+
+                    String text = ruleInfo.getTextInfo();
+                    Info changedInfo = new Info();
+
+                    if (text != null) {
+                        String entryName = FilenameUtils.removeExtension(layoutOutputFile.getName())
+                                + "_" + wearViewId;
+                        // put text to stringMap
+                        stringMap.put(entryName, text);
+                        // find the node with id and set text
+                        String value = STRING_PREFIX + entryName;
+                        changedInfo.setText(value);
+
+//                    findViewIdSetInfo(layoutOutPutFolder, wearViewId, value);
+                    }
+
+                    String image = ruleInfo.getImageInfo();
+                    if (image != null) {
+                        // if image file exists
+                        File imageFile = new File(Paths.get(unzippedFileDest, pkgName, RES_DIR_NAME)
+                                .toString(), image);
+                        if (!imageFile.exists()) {
+                            continue;
+                        }
+                        // copy to drawable folder
+                        FileUtils.copyFileToDirectory(imageFile, new File(appOutPath + DRAWABLE_PATH));
+                        // find the node with id and set image
+                        String value = DRAWABLE_PREFIX + FilenameUtils.removeExtension(image);
+                        changedInfo.setImage(value);
+//                    findViewIdSetInfo(layoutOutPutFolder, wearViewId, value);
+                    }
+
+                    idInfoMap.put(ID_VALUE_PREFIX + wearViewId, changedInfo);
+                }
+
+                // set text and image info to layout file at once
+                updateLayout(layoutOutputFile, idInfoMap);
+                idInfoMap.clear();
+
+                String prefName = FilenameUtils.removeExtension(mappingRuleFile.getName())
+                        .replace(RULE_SUFFIX, PREF_SUFFIX);
+                if (isDebug) {
+                    System.out.println();
+                    System.out.println("infoList: " + infoList);
+                    System.out.println("mappingRule: " + mappingRuleFile);
+                    System.out.println("prefName: " + prefName);
+                    System.out.println("layoutFile: " + layoutOutputFile);
+                }
+
+                String layoutName = LAYOUT_PREFIX + FilenameUtils.removeExtension(layoutOutputFile
+                        .getName());
+                String wearIdName = ARRAY_PREFIX + prefName + WEAR_ID_SUFFIX;
+                String phoneIdName = ARRAY_PREFIX + prefName + PHONE_ID_SUFFIX;
+                if (isDebug) {
+                    System.out.println(prefName);
+                    System.out.println(layoutName);
+                    System.out.println(wearIdName);
+                    System.out.println(phoneIdName);
+                }
+
+                if (!prefName.endsWith(ITEM_SUFFIX + PREF_SUFFIX)) {
+                    prefs.add(prefName);
+                }
+
+                if (prefName.endsWith(ITEM_SUFFIX + PREF_SUFFIX)) {
+                    itemLayouts.add(layoutName);
+                    wearItemViewIdArray.add(wearIdName);
+                    phoneItemViewIdArray.add(phoneIdName);
+                    wearItemViewIdIndexMap.put(prefName + WEAR_ID_SUFFIX, wearViewIds);
+                    phoneItemViewIdIndexMap.put(prefName + PHONE_ID_SUFFIX, phoneViewIds);
+                    System.out.println();
+                } else {
+                    layouts.add(layoutName);
+                    wearViewIdArray.add(wearIdName);
+                    phoneViewIdArray.add(phoneIdName);
+                    wearViewIdIndexMap.put(prefName + WEAR_ID_SUFFIX, wearViewIds);
+                    phoneViewIdIndexMap.put(prefName + PHONE_ID_SUFFIX, phoneViewIds);
                 }
             }
-        }).start();
+
+            // write stringMap to strings.xml
+            File stringsFile = new File(appOutPath + VALUES_PATH, STRINGS_FILE_NAME);
+            serializeMapToFile(stringMap, stringsFile);
+
+            // process mapping rules and layout xml to generate arrays.xml files
+            File arraysFile = new File(appOutPath + VALUES_PATH, ARRAYS_FILE_NAME);
+            generateArraysXmlFile(arraysFile);
+
+            // put all together, copy app project to WearAppEnv folder to start building apk
+            String[] buildApkCmd = new String[]{"bash", "-c", "cd `pwd`/" + outputPath
+                    + " && ./gradlew build"};
+            Runtime run = Runtime.getRuntime();
+            final Process pr = run.exec(buildApkCmd);
+            try {
+                pr.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            final BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            while (stdoutReader.ready()) {
+                                String line = stdoutReader.readLine();
+                                System.out.println("stdout: " + line);
+                            }
+
+                            try {
+                                int exitCode = pr.exitValue();
+                                System.out.println("exit code: " + exitCode);
+                                // if we get here then the process finished executing
+                                break;
+                            } catch (IllegalThreadStateException e) {
+//                            e.printStackTrace();
+                            }
+                            // wait 200ms and try again
+                            Thread.sleep(200);
+                        } catch (InterruptedException | IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }).start();
+
+            final BufferedReader stderrReader = new BufferedReader(
+                    new InputStreamReader(pr.getErrorStream()));
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            while (stderrReader.ready()) {
+                                String line = stderrReader.readLine();
+                                System.err.println("stderr: " + line);
+                            }
+                            try {
+                                int exitCode = pr.exitValue();
+                                System.out.println("exit code: " + exitCode);
+                                // if we get here then the process finished executing
+                                break;
+                            } catch (IllegalThreadStateException e) {
+//                            e.printStackTrace();
+                            }
+                            // wait 200ms and try again
+                            Thread.sleep(200);
+                        } catch (InterruptedException | IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }).start();
 
 
-        // transfer apk back to the phone
+            // transfer apk back to the phone
+
+            long buildEnd = System.currentTimeMillis();
+
+            System.out.format("app %s takes: %d ms", appName, (buildEnd - buildStart));
+        }
     }
 
     private static void generateArraysXmlFile(File arraysFile) {

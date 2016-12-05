@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+    <android.support.wearable.view.CircledImageView
+            from="com.bravetheskies.ghostracer:id/pause | com.bravetheskies.ghostracer:id/resume" to="button_pause">
+        <image>ic_resume.xml</image>
+    </android.support.wearable.view.CircledImageView>
+
+    <android.support.wearable.view.CircledImageView from="com.bravetheskies.ghostracer:id/stop" to="button_finish">
+        <image>ic_stop.xml</image>
+    </android.support.wearable.view.CircledImageView>
+
+    <TextView from="com.bravetheskies.ghostracer:id/tvTime" to="textViewCenter">
+        <text>Record Time</text>
+    </TextView>
+</Rule>

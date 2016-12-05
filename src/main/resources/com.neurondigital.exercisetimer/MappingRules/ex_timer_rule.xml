@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Rule>
+    <ImageView from="com.neurondigital.exercisetimer:id/circle_bar" to="ex_timer"/>
+    <TextView from="com.neurondigital.exercisetimer:id/start_btn" to="pause">
+        <text>Start</text>
+    </TextView>
+</Rule>

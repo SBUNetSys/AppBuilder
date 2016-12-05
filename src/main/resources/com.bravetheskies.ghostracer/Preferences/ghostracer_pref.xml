@@ -1,19 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <nodes>
-<node>
-    <id>com.bravetheskies.ghostracer:id/resume</id>
-    <rect>567 1612 823 1756</rect>
-  </node>
-  <node>
-    <id>com.bravetheskies.ghostracer:id/pause</id>
-    <rect>567 1612 823 1756</rect>
-  </node>
-  <node>
-    <id>com.bravetheskies.ghostracer:id/stop</id>
-    <rect>826 1612 1080 1756</rect>
-  </node>
-  <node>
-    <id>com.bravetheskies.ghostracer:id/tvTime</id>
-    <rect>51 1605 564 1764</rect>
-  </node>
+    <node>
+        <id>com.bravetheskies.ghostracer:id/pause | com.bravetheskies.ghostracer:id/resume</id>
+        <rect>567 1612 823 1756</rect>
+    </node>
+    <node>
+        <id>com.bravetheskies.ghostracer:id/stop</id>
+        <rect>826 1612 1080 1756</rect>
+    </node>
+    <node>
+        <id>com.bravetheskies.ghostracer:id/tvTime</id>
+        <rect>51 1605 564 1764</rect>
+    </node>
 </nodes>

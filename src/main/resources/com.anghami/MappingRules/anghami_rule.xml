@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+    <TextView from="com.anghami:id/tv_song_name" to="songName">
+        <text>Song Name</text>
+    </TextView>
+    <TextView from="com.anghami:id/tv_album_artist" to="artistName">
+        <text>Artist name</text>
+    </TextView>
+    <Button from="com.anghami:id/bt_next" to="next">
+        <image>next.png</image>
+    </Button>
+    <Button from="com.anghami:id/bt_previous" to="previous">
+        <image>previous.png</image>
+    </Button>
+    <Button from="com.anghami:id/bt_play" to="playPlayer">
+        <image>play.png</image>
+    </Button>
+    <android.support.wearable.view.BoxInsetLayout from="com.anghami:id/iv_album_cover" to="boxPlayer"/>
+</Rule>

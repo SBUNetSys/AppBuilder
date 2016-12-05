@@ -79,6 +79,8 @@ public class ViewUtil {
                 Drawable drawable = new BitmapDrawable(context.getResources(), resource);
                 if (nodeView instanceof CircularButton) {
                     ((CircularButton) nodeView).setImageDrawable(drawable);
+                } else if (nodeView instanceof ImageView) {
+                    ((ImageView) nodeView).setImageDrawable(drawable);
                 } else {
                     nodeView.setBackground(drawable);
                 }

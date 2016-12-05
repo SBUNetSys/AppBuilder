@@ -4,4 +4,8 @@
     <id>com.neurondigital.exercisetimer:id/circle_bar</id>
     <rect>60 240 1020 1596</rect>
   </node>
+  <node>
+    <id>com.neurondigital.exercisetimer:id/start_btn</id>
+    <rect>0 1596 540 1776</rect>
+  </node>
 </nodes>

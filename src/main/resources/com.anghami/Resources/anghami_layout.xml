@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.wearable.view.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                              android:id="@+id/boxPlayer"
+                                              android:layout_width="fill_parent"
+                                              android:layout_height="fill_parent"
+                                              android:padding="5.0dip">
+
+  <FrameLayout
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:padding="5.0dip"
+          app:layout_box="all">
+
+    <TextView
+            android:id="@+id/songName"
+            android:layout_width="160.0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="8.0dip"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="2"
+            android:paddingLeft="18.0dip"
+            android:paddingRight="18.0dip"
+            android:text="Song Name"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#ffffffff"
+            android:textSize="33.0px" />
+
+    <TextView
+            android:id="@+id/artistName"
+            android:layout_width="160.0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="8.0dip"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="2"
+            android:paddingLeft="18.0dip"
+            android:paddingRight="18.0dip"
+            android:text="Artist name"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#ffffffff"
+            android:textSize="28.0px" />
+
+    <Button
+            android:id="@+id/next"
+            android:layout_width="50.0dip"
+            android:layout_height="50.0dip"
+            android:layout_gravity="center|right"
+            android:gravity="right" />
+
+    <Button
+            android:id="@+id/previous"
+            android:layout_width="50.0dip"
+            android:layout_height="50.0dip"
+            android:layout_gravity="center|left"
+            android:gravity="left" />
+
+    <Button
+            android:id="@+id/playPlayer"
+            android:layout_width="60.0dip"
+            android:layout_height="60.0dip"
+            android:layout_gravity="center"
+    />
+
+  </FrameLayout>
+</android.support.wearable.view.BoxInsetLayout>
