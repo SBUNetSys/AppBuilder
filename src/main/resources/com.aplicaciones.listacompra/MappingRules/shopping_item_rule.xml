@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout>
+<Rule>
     <android.support.wearable.view.CircledImageView
-            from="com.aplicaciones.listacompra:id/imageTrashButton" to="image_article"/>
-    <Button from="com.aplicaciones.listacompra:id/text" to="text_article"/>
-</LinearLayout>
+            from="com.aplicaciones.listacompra:id/imageTrashButton" to="image_article">
+        <image>delete.png</image>
+    </android.support.wearable.view.CircledImageView>
+    <Button from="com.aplicaciones.listacompra:id/text" to="text_article">
+        <text>List Item</text>
+    </Button>
+</Rule>

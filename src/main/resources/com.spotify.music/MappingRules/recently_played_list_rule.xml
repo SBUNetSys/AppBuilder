@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.BoxInsetLayout>
-    <FrameLayout>
-        <!--from none (or no from attribute) means not from any phone viewId-->
-        <TextView from="none" to="header">
-            <text>Recently Played</text>
-        </TextView>
-    </FrameLayout>
-    <!--for list-like view, from value comes from the item root layout view id-->
+<Rule>
+    <TextView from="none" to="header">
+        <text>Recently Played</text>
+    </TextView>
+        <!--for list-like view, from value comes from the item root layout view id-->
     <android.support.wearable.view.WearableListView from="com.spotify.music:id/row_view" to="content_list"/>
-</android.support.wearable.view.BoxInsetLayout>
+</Rule>

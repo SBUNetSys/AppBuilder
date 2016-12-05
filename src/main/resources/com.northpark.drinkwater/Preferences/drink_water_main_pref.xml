@@ -1,8 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <nodes>
   <node>
+    <id>com.northpark.drinkwater:id/drink_progress</id>
+    <rect>135 390 990 420</rect>
+  </node>
+  <node>
     <id>com.northpark.drinkwater:id/drink_target</id>
-    <rect>666 294 1026 366</rect>
+    <rect>647 294 1026 366</rect>
   </node>
   <node>
     <id>com.northpark.drinkwater:id/add_cup</id>

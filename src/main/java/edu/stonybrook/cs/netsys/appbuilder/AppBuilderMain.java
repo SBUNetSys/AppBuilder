@@ -9,7 +9,6 @@ import net.lingala.zip4j.exception.ZipException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.IOFileFilter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -109,19 +108,17 @@ public class AppBuilderMain {
         // step 1, new thread handle received file, pkgName.zip, unzip and put to temp folder
         String receivedFileSavedPath = "src/main/resources/";
         if (isDebug) {
-            new File(receivedFileSavedPath).listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    if (name.startsWith("com.")) {
-                        appPkgNames.add(name);
-                    }
-                    return false;
+            File[] files = new File(receivedFileSavedPath).listFiles();
+            for (File f : files != null ? files : new File[0]) {
+                String fileName = f.getName();
+                if (!fileName.startsWith("uiwear")) {
+                    System.out.println(fileName);
+                    appPkgNames.add(fileName);
                 }
-            });
-            appPkgNames.clear();
-            appPkgNames.add("com.endomondo.android");
-
+            }
             System.out.println("files: " + appPkgNames);
+            appPkgNames.clear();
+            appPkgNames.add("com.spotify.music");
             System.out.println();
         }
 

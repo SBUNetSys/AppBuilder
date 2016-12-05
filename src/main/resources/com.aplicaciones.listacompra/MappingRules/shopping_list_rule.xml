@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.BoxInsetLayout>
-    <FrameLayout>
-        <!--from none (or no from attribute) means not from any phone viewId-->
-        <TextView from="none" to="header">
-            <text>My Shopping List</text>
-        </TextView>
-    </FrameLayout>
+<Rule>
+    <TextView from="none" to="header">
+        <text>My Shopping List</text>
+    </TextView>
     <android.support.wearable.view.WearableListView
             from="com.aplicaciones.listacompra:id/swiping_layout" to="sample_list_view"/>
-</android.support.wearable.view.BoxInsetLayout>
+</Rule>

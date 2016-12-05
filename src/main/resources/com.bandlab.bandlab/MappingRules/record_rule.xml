@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.BoxInsetLayout>
+<Rule>
     <android.support.wearable.view.CircularButton from="com.bandlab.bandlab:id/sme_record"
                                                   to="action_button" />
     <TextView from="com.bandlab.bandlab:id/sme_timer" to="action_title">
         <text>Record</text>
     </TextView>
-</android.support.wearable.view.BoxInsetLayout>
+</Rule>

@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<android.support.wearable.view.BoxInsetLayout>
-    <LinearLayout>
-        <LinearLayout>
-            <LinearLayout>
-                <TextView from="com.uramaks.music.player:id/text1" to="text_line1"/>
-                <TextView from="com.uramaks.music.player:id/text2" to="text_line2"/>
-            </LinearLayout>
-            <LinearLayout>
-                <ImageView from="none" to="previous">
-                    <image>previous.png</image>
-                </ImageView>
-                <ImageView from="com.uramaks.music.player:id/play | com.uramaks.music.player:id/pause" to="play">
-                    <image>play.png</image>
-                </ImageView>
-                <ImageView from="com.uramaks.music.player:id/next" to="next">
-                    <image>next.png</image>
-                </ImageView>
-            </LinearLayout>
-            <LinearLayout>
-                <ImageView from="com.uramaks.music.player:id/stop" to="stop">
-                    <image>stop.png</image>
-                </ImageView>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-</android.support.wearable.view.BoxInsetLayout>
+<Rule>
+    <TextView from="com.uramaks.music.player:id/text1" to="text_line1">
+        <text>Artist</text>
+    </TextView>
+    <TextView from="com.uramaks.music.player:id/text2" to="text_line2">
+        <text>Song</text>
+    </TextView>
+    <ImageView from="none" to="previous">
+        <image>previous.png</image>
+    </ImageView>
+    <ImageView from="com.uramaks.music.player:id/play | com.uramaks.music.player:id/pause" to="play">
+        <image>play.png</image>
+    </ImageView>
+    <ImageView from="com.uramaks.music.player:id/next" to="next">
+        <image>next.png</image>
+    </ImageView>
+    <ImageView from="com.uramaks.music.player:id/stop" to="stop">
+        <image>stop.png</image>
+    </ImageView>
+</Rule>
