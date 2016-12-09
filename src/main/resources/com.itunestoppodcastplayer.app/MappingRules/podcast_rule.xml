@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Rule>
-    <TextView from="com.kiss.countit:id/iv_increment" to="tv_increment">
-        <text>+</text>
+    <ImageView from="com.itunestoppodcastplayer.app:id/imageView_podcast_logo" to="imageView_bg">
+        <image>default_image_large.png</image>
+    </ImageView>
+    <TextView from="com.itunestoppodcastplayer.app:id/textView_episode_title" to="textView_title">
+        <text>Title</text>
     </TextView>
-    <TextView from="com.kiss.countit:id/iv_decrement" to="tv_decrement">
-        <text>-</text>
-    </TextView>
-    <TextView from="com.kiss.countit:id/tv_title" to="tv_title"/>
-    <TextView from="com.kiss.countit:id/tv_value" to="tv_value"/>
+    <ImageButton from="com.itunestoppodcastplayer.app:id/imageView_play" to="imageView_play">
+        <image>player_play.png</image>
+    </ImageButton>
+    <ImageButton from="none1" to="imageView_play_forward">
+        <image>player_forward.png</image>
+    </ImageButton>
+    <ImageButton from="none2" to="imageView_play_rewind">
+        <image>player_backword.png</image>
+    </ImageButton>
+    <ImageButton from="none3" to="imageView_play_stop">
+        <image>player_stop.png</image>
+    </ImageButton>
+    <ImageButton from="com.itunestoppodcastplayer.app:id/imageView_play_next" to="imageView_play_next">
+        <image>player_next.png</image>
+    </ImageButton>
 </Rule>

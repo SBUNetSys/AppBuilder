@@ -117,8 +117,6 @@ public class AppBuilderMain {
                 }
             }
             System.out.println("files: " + appPkgNames);
-            appPkgNames.clear();
-            appPkgNames.add("com.spotify.music");
             System.out.println();
         }
 
@@ -318,8 +316,9 @@ public class AppBuilderMain {
                         }
                         // copy to drawable folder
                         FileUtils.copyFileToDirectory(imageFile, new File(appOutPath + DRAWABLE_PATH));
-                        // find the node with id and set image
-                        String value = DRAWABLE_PREFIX + FilenameUtils.removeExtension(image);
+                        // find the node with id and set image, for .9.png need to remove ext twice
+                        String value = DRAWABLE_PREFIX + FilenameUtils.removeExtension(FilenameUtils
+                                .removeExtension(image));
                         changedInfo.setImage(value);
 //                    findViewIdSetInfo(layoutOutPutFolder, wearViewId, value);
                     }

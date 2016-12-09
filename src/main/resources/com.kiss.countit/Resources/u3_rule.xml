@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+  <!--     <android.support.wearable.view.BoxInsetLayout from="biz.mobidev.mdplayer:id/image" to="bg">
+          <image>img_no_cover.png</image>
+      </android.support.wearable.view.BoxInsetLayout>
+      <RelativeLayout from="none" to="track_info_card_layout" >
+          <image>card_bg.9.png</image>
+      </RelativeLayout>
+      <TextView from="biz.mobidev.mdplayer:id/text_track_title" to="title">
+          <text>Title</text>
+      </TextView>
+
+      <TextView from="biz.mobidev.mdplayer:id/text_track_artist" to="artist">
+          <text>Artist</text>
+      </TextView>
+      <ImageButton from="biz.mobidev.mdplayer:id/btn_ffwd_playback_fragment" to="btn_next" >
+          <image>ic_next.png</image>
+      </ImageButton>
+
+      <ImageButton from="biz.mobidev.mdplayer:id/btn_pause_playback_fragment" to="btn_play_pause">
+          <image>ic_play.png</image>
+      </ImageButton> -->
+
+  <TextView from="com.kiss.countit:id/tv_title" to="tv_title">
+    <text>Hello World</text>
+  </TextView>
+  <TextView from="com.kiss.countit:id/tv_value" to="tv_value" >
+    <text>Hello World</text>
+  </TextView>
+  <TextView from="com.kiss.countit:id/iv_decrement" to="tv_decrement">
+    <text>Hello World</text>
+  </TextView>
+
+  <TextView from="com.kiss.countit:id/iv_increment" to="tv_increment">
+    <text>Hello World</text>
+  </TextView>
+
+</Rule>

@@ -9,14 +9,6 @@
     <rect>452 1413 626 1587</rect>
   </node>
   <node>
-    <id>com.itunestoppodcastplayer.app:id/imageView_play_backword</id>
-    <rect>228 1428 395 1572</rect>
-  </node>
-  <node>
-    <id>com.itunestoppodcastplayer.app:id/imageView_play_forward</id>
-    <rect>683 1428 850 1572</rect>
-  </node>
-  <node>
     <id>com.itunestoppodcastplayer.app:id/imageView_play_next</id>
     <rect>878 1428 1080 1572</rect>
   </node>

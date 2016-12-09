@@ -1,68 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="fill_parent"
-             android:layout_height="fill_parent">
+<android.support.wearable.view.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                              android:id="@+id/bg"
+                                              android:layout_width="fill_parent"
+                                              android:layout_height="fill_parent"
+                                              android:layout_marginBottom="6.0dip">
+
 
   <RelativeLayout
+          android:id="@+id/track_info_card_layout"
+          android:background="@drawable/card_bg"
           android:layout_width="fill_parent"
-          android:layout_height="80.0dip"
+          android:layout_height="90.0dip"
           android:layout_gravity="bottom"
-          android:background="@color/white">
-
-    <TextView
-            android:id="@+id/tv_increment"
-            android:layout_width="60.0dip"
-            android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:background="#ffff3f3f"
-            android:gravity="center|left|top"
-            android:paddingLeft="10.0dip"
-            android:text="+"
-            android:textColor="@color/white"
-            android:textSize="34.0sp" />
-
-    <TextView
-            android:id="@+id/tv_decrement"
-            android:layout_width="60.0dip"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:background="#ff99cc00"
-            android:gravity="center|right|top"
-            android:paddingRight="10.0dip"
-            android:text="-"
-            android:textColor="@color/white"
-            android:textSize="34.0sp" />
+          android:clickable="true"
+          app:layout_box="left|right">
 
     <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_toLeftOf="@+id/tv_increment"
-            android:layout_toRightOf="@+id/tv_decrement"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingTop="12.0dip">
 
       <TextView
-              android:id="@+id/tv_title"
+              android:id="@+id/title"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:ellipsize="end"
-              android:gravity="center"
-              android:maxLines="2"
-              android:padding="5.0dip"
-              android:textColor="#ff444444"
-              android:textSize="14.0sp" />
+              android:fontFamily="sans-serif-condensed"
+              android:maxLines="1"
+              android:textColor="@color/white"
+              android:textSize="18.0sp" />
 
       <TextView
-              android:id="@+id/tv_value"
+              android:id="@+id/artist"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:ellipsize="end"
-              android:gravity="center"
-              android:paddingLeft="5.0dip"
-              android:paddingRight="5.0dip"
-              android:textColor="#ff444444"
-              android:textSize="18.0sp"
-              android:maxLines="1" />
+              android:fontFamily="sans-serif-light"
+              android:lines="1"
+              android:maxLines="1"
+              android:textColor="#ff9985c0"
+              android:textSize="12.0sp" />
     </LinearLayout>
   </RelativeLayout>
-</FrameLayout>
+
+  <ImageButton
+          android:id="@+id/btn_next"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end|bottom|center"
+          android:layout_marginBottom="70.0dip"
+          android:layout_marginEnd="10.0dip"
+          android:background="@android:color/transparent"/>
+
+  <ImageButton
+          android:id="@+id/btn_play_pause"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="start|bottom|center"
+          android:layout_marginBottom="70.0dip"
+          android:layout_marginStart="10.0dip"
+          android:background="@android:color/transparent"/>
+</android.support.wearable.view.BoxInsetLayout>

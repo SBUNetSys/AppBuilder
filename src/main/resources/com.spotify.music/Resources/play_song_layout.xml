@@ -37,8 +37,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignEnd="@+id/text"
-                        android:backgroundTint="#297BDE"
-                        android:contentDescription="@string/app_name" />
+                        android:tint="#297BDE"
+                        android:contentDescription="@string/app_name"/>
                 <!-- set card title
                 title.setText(text);
                 -->

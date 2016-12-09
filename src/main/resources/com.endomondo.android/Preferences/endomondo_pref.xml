@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <nodes>
   <node>
-    <id>com.endomondo.android:id/ButtonStartPauseBackground | com.endomondo.android:id/ButtonStartPauseFront</id>
+    <id>com.endomondo.android:id/ButtonStartPauseFront</id>
     <rect>48 1188 408 1548</rect>
   </node>
-  <node>
-    <id>com.endomondo.android:id/ButtonCountdownStopFront | com.endomondo.android:id/ButtonCountdownStopBackground</id>
-    <rect>318 1368 498 1548</rect>
+<node>
+    <id>com.endomondo.android:id/TVmainZoneValue</id>
+    <rect>48 504 604 636</rect>
   </node>
 </nodes>

@@ -18,8 +18,9 @@
 
         <Button
                 android:id="@+id/remove_day_button"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent"
@@ -28,8 +29,9 @@
 
         <Button
                 android:id="@+id/add_day_button"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:textAllCaps="false"
                 android:textSize="20sp"

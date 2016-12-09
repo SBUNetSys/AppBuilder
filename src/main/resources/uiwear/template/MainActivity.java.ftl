@@ -5,7 +5,8 @@ import static edu.stonybrook.cs.netsys.uiwearlib.dataProtocol.DataConstant.DATA_
 import static edu.stonybrook.cs.netsys.uiwearlib.dataProtocol.DataConstant.INTENT_SUFFIX;
 import static edu.stonybrook.cs.netsys.uiwearlib.viewProtocol.ViewUtil.renderView;
 import static edu.stonybrook.cs.netsys.uiwearlib.viewProtocol.ViewUtil.setViewListener;
-
+import android.util.Log;
+import android.os.SystemClock;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -141,6 +142,7 @@ public class MainActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null) {
+                long beginTime = SystemClock.currentThreadTimeMillis();
                 ViewUtil.isCachedEnable = intent.getBooleanExtra(CACHE_STATUS_KEY, true);
                 Bundle bundle = intent.getBundleExtra(DATA_BUNDLE_KEY);
                 DataBundle dataBundle = bundle.getParcelable(DATA_BUNDLE_KEY);
@@ -185,6 +187,8 @@ public class MainActivity extends Activity {
                     Logger.d("new normal node: " + node);
                     parseData(context, wearViewIds, phoneViewIds, node);
                 }
+                long duration = SystemClock.currentThreadTimeMillis() - beginTime;
+                Log.i("MICRO", "watch app render time: " + duration);
             }
         }
     }
@@ -198,7 +202,9 @@ public class MainActivity extends Activity {
         List<String> phoneViewIdList = Arrays.asList(phoneViewIds);
         for (int i = 0; i < phoneViewIdList.size(); i++) {
             String viewId = phoneViewIdList.get(i);
-            if (phoneViewId.contains(viewId)) {
+            Logger.d("viewId:" + viewId);
+            List<String> viewIdList = Arrays.asList(viewId.split(" \\| "));
+            if (viewIdList.indexOf(phoneViewId) != -1) {
                 index = i;
                 break;
             }

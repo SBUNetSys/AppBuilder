@@ -1,23 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <nodes>
-    <node>
-        <id>com.uramaks.music.player:id/play | com.uramaks.music.player:id/pause</id>
-        <rect>396 1038 684 1326</rect>
-    </node>
-    <node>
-        <id>com.uramaks.music.player:id/stop</id>
-        <rect>468 1326 612 1470</rect>
-    </node>
-    <node>
-        <id>com.uramaks.music.player:id/next</id>
-        <rect>708 1110 852 1254</rect>
-    </node>
-    <node>
-        <id>com.uramaks.music.player:id/text2</id>
-        <rect>180 954 894 1019</rect>
-    </node>
-    <node>
-        <id>com.uramaks.music.player:id/text1</id>
-        <rect>180 889 894 954</rect>
-    </node>
+  <node>
+    <id>com.uramaks.music.player:id/next</id>
+    <rect>708 1110 852 1254</rect>
+  </node>
+  <node>
+    <id>com.uramaks.music.player:id/previous</id>
+    <rect>228 1110 372 1254</rect>
+  </node>
+<node>
+    <id>com.uramaks.music.player:id/play | com.uramaks.music.player:id/pause</id>
+    <rect>396 1038 684 1326</rect>
+  </node>
 </nodes>

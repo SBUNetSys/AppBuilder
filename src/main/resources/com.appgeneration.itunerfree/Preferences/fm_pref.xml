@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <nodes>
   <node>
-    <id>com.appgeneration.itunerfree:id/iv_sp_artwork</id>
+    <id>com.appgeneration.itunerfree:id/iv_sp_station</id>
     <rect>265 222 814 771</rect>
   </node>
   <node>

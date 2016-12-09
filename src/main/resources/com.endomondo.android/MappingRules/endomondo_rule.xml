@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Rule>
+    <TextView from="com.endomondo.android:id/TVmainZoneValue" to="duration">
+        <text>00:00</text>
+    </TextView>
     <ImageButton from="com.endomondo.android:id/ButtonStartPauseBackground | com.endomondo.android:id/ButtonStartPauseFront" to="ButtonStartPauseFront">
         <image>start.png</image>
     </ImageButton>
     <ImageButton from="com.endomondo.android:id/ButtonCountdownStopFront | com.endomondo.android:id/ButtonCountdownStopBackground" to="ButtonStopFront">
         <image>stop.png</image>
     </ImageButton>
-    <ImageButton from="none" to="logo">
+    <ImageButton from="none1" to="logo">
         <image>logo.png</image>
     </ImageButton>
-    <ImageButton from="none" to="gps_status">
+    <ImageButton from="none2" to="gps_status">
         <image>gps_searching.png</image>
     </ImageButton>
-    <ImageButton from="none" to="SportIcon">
+    <ImageButton from="none3" to="SportIcon">
         <image>running.png</image>
     </ImageButton>
 </Rule>
