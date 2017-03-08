@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Rule>
     <TextView from="none" to="header">
-        <text>My Shopping List</text>
+        <text>List</text>
     </TextView>
     <android.support.wearable.view.WearableListView
             from="com.aplicaciones.listacompra:id/swiping_layout" to="sample_list_view"/>

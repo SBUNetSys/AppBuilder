@@ -6,8 +6,8 @@
 
     <android.support.wearable.view.CircledImageView
             android:id="@+id/image_article"
-            android:layout_width="52.0dip"
-            android:layout_height="52.0dip"
+            android:layout_width="36.0dip"
+            android:layout_height="36.0dip"
             android:layout_marginStart="15.0dip"
             app:circle_border_color="#ff58d3f7"
             app:circle_border_width="2.0dip"
@@ -16,7 +16,7 @@
     <Button
             android:id="@+id/text_article"
             android:layout_width="fill_parent"
-            android:layout_height="52.0dip"
+            android:layout_height="32.0dip"
             android:layout_marginStart="15.0dip"
             android:layout_marginEnd="10.0dip"
             android:background="@null"

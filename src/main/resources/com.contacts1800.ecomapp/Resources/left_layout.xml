@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <android.support.wearable.view.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                              android:background="@color/white"
                                               android:layout_width="match_parent"
                                               android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:text="Left"
+                android:textAlignment="center"
+                android:textColor="#3c5161" />
+    </LinearLayout>
+
 
     <ImageView
             android:id="@+id/lens_view"
@@ -12,31 +30,37 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
         <Button
                 android:id="@+id/remove_day_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_gravity="center"
-                android:textAllCaps="false"
                 android:background="@android:color/transparent"
-                android:textSize="20sp"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingRight="50dp"
+                android:paddingTop="135dp"
+                android:textAllCaps="false"
+                android:textColor="#3c5161"
+                android:textSize="40dp" />
 
         <Button
                 android:id="@+id/add_day_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_gravity="center"
-                android:textAllCaps="false"
-                android:textSize="20sp"
                 android:background="@android:color/transparent"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingStart="50dp"
+                android:paddingTop="135dp"
+                android:textAllCaps="false"
+                android:textColor="#3c5161"
+                android:textSize="20sp" />
     </LinearLayout>
 
 </android.support.wearable.view.BoxInsetLayout>

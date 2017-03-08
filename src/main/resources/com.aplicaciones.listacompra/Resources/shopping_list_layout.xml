@@ -3,32 +3,56 @@
                                               android:layout_width="fill_parent"
                                               android:layout_height="fill_parent"
                                               android:background="@android:color/white">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
 
+        <LinearLayout
+                android:id="@+id/linearActionBar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                 android:layout_width="fill_parent"
-                 android:layout_height="47.0dip"
-                 android:orientation="horizontal"
-                 android:background="@color/blue"
-                 android:paddingLeft="8.0dip"
-                 android:paddingRight="8.0dip">
+            <ImageView
+                    android:id="@+id/imageCar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:background="#0000FF"
+                    android:src="@drawable/ic_car" />
 
-        <TextView
-                android:id="@+id/header"
-                android:layout_width="fill_parent"
+            <TextView
+                    android:id="@+id/header"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:background="#0000FF"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingEnd="70dp"
+                    android:textColor="@color/white"
+                    android:textSize="20.0sp" />
+
+            <ImageButton
+                    android:id="@+id/imBtnAddArticle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:background="#0000FF"
+                    android:src="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <ImageView
+                android:id="@+id/shadow"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|start"
-                android:duplicateParentState="true"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="18.0sp"/>
-    </FrameLayout>
+                android:src="@drawable/shadow" />
 
-    <android.support.wearable.view.WearableListView
-            android:id="@+id/sample_list_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+        <android.support.wearable.view.WearableListView
+                android:id="@+id/sample_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </LinearLayout>
 
 </android.support.wearable.view.BoxInsetLayout>
