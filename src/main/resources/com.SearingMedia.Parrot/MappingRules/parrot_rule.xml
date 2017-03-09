@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Rule>
-    <TextView from="com.kiss.countit:id/iv_increment" to="tv_increment">
-        <text>+</text>
+    <TextView from="com.SearingMedia.Parrot:id/recordTimer" to="timeTextView">
+        <text>00:00</text>
     </TextView>
-    <TextView from="com.kiss.countit:id/iv_decrement" to="tv_decrement">
-        <text>-</text>
-    </TextView>
-    <TextView from="com.kiss.countit:id/tv_title" to="tv_title"/>
-    <TextView from="com.kiss.countit:id/tv_value" to="tv_value"/>
+    <android.support.wearable.view.CircledImageView from="com.SearingMedia.Parrot:id/buttonSignaturePause" to="pause">
+        <image>icon_unpause.png</image>
+    </android.support.wearable.view.CircledImageView>
 </Rule>

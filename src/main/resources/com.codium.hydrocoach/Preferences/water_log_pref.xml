@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+    <node>
+      <id>com.codium.hydrocoach:id/txtIntakeAmount</id>
+      <rect>216 359 358 424</rect>
+    </node>
+    <node>
+      <id>com.codium.hydrocoach:id/txtIntakeTime</id>
+      <rect>636 359 888 424</rect>
+    </node>
+    <node>
+      <id>com.codium.hydrocoach:id/btnDelete</id>
+      <rect>888 308 1056 476</rect>
+    </node>
+</nodes>

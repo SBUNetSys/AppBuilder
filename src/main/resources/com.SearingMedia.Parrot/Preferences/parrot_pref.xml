@@ -1,15 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <nodes>
   <node>
-    <id>com.SearingMedia.Parrot:id/buttonSignaturePause</id>
-    <rect>258 1507 480 1729</rect>
-  </node>
-  <node>
-    <id>com.SearingMedia.Parrot:id/buttonSignatureStop</id>
-    <rect>600 1507 822 1729</rect>
-  </node>
-  <node>
     <id>com.SearingMedia.Parrot:id/recordTimer</id>
     <rect>248 399 831 717</rect>
+  </node>
+  <node>
+    <id>com.SearingMedia.Parrot:id/buttonSignaturePause</id>
+    <rect>268 1527 466 1725</rect>
   </node>
 </nodes>

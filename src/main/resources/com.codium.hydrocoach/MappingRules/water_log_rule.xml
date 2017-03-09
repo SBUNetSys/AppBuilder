@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+    <TextView from="com.codium.hydrocoach:id/txtIntakeAmount" to="amount">
+        <text>0 fl.oz</text>
+    </TextView>
+    <ImageButton from="com.codium.hydrocoach:id/btnDelete" to="delete">
+        <image>ic_delete_gray.png</image>
+    </ImageButton>
+    <TextView from="com.codium.hydrocoach:id/txtIntakeTime" to="intake">
+        <text>00:00</text>
+    </TextView>
+</Rule>

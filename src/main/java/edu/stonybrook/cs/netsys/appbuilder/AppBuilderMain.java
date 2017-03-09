@@ -119,6 +119,8 @@ public class AppBuilderMain {
             System.out.println("files: " + appPkgNames);
             System.out.println();
         }
+        appPkgNames.clear();
+        appPkgNames.add("com.codium.hydrocoach");
 
         for (String pkgName : appPkgNames) {
             stringMap.clear();
