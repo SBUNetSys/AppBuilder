@@ -120,7 +120,7 @@ public class AppBuilderMain {
             System.out.println();
         }
         appPkgNames.clear();
-        appPkgNames.add("com.codium.hydrocoach");
+        appPkgNames.add("com.skimble.workouts");
 
         for (String pkgName : appPkgNames) {
             stringMap.clear();

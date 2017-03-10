@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+    <ImageButton from="com.skimble.workouts:id/workout_play_button" to="play_pause_button">
+        <image>controller_play_normal.png</image>
+    </ImageButton>
+    <ImageButton from="com.skimble.workouts:id/workout_next_exercise_btn" to="next_button">
+        <image>controller_fastforward_enabled.png</image>
+    </ImageButton>
+    <ImageButton from="com.skimble.workouts:id/workout_prev_exercise_btn" to="previous_button">
+        <image>controller_rewind_enabled.png</image>
+    </ImageButton>
+</Rule>

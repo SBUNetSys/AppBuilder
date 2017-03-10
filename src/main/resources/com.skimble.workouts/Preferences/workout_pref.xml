@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.skimble.workouts:id/workout_play_button</id>
+    <rect>372 720 708 1056</rect>
+  </node>
+  <node>
+    <id>com.skimble.workouts:id/workout_next_exercise_btn</id>
+    <rect>708 792 900 984</rect>
+  </node>
+  <node>
+    <id>com.skimble.workouts:id/workout_prev_exercise_btn</id>
+    <rect>180 792 372 984</rect>
+  </node>
+</nodes>
