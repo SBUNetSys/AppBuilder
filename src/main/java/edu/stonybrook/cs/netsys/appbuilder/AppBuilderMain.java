@@ -120,7 +120,7 @@ public class AppBuilderMain {
             System.out.println();
         }
         appPkgNames.clear();
-        appPkgNames.add("com.skimble.workouts");
+        appPkgNames.add("com.apps4you.spraycan");
 
         for (String pkgName : appPkgNames) {
             stringMap.clear();

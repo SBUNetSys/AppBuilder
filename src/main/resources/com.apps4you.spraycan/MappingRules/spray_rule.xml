@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rule>
+    <ImageView from="com.apps4you.spraycan:id/mainview_spray" to="imageButton">
+        <image>turn_off.jpg</image>
+    </ImageView>
+</Rule>

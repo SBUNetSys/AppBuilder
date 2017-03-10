@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.apps4you.spraycan:id/mainview_spray</id>
+    <rect>0 0 1080 1626</rect>
+  </node>
+</nodes>
