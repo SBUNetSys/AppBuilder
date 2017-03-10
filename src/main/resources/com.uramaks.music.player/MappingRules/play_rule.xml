@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <Rule>
-    <TextView from="none1" to="text_line1">
+    <TextView from="com.uramaks.music.player:id/text1" to="text_line1">
         <text>Artist</text>
     </TextView>
-    <TextView from="none2" to="text_line2">
+    <TextView from="com.uramaks.music.player:id/text2" to="text_line2">
         <text>Song</text>
     </TextView>
     <ImageView from="com.uramaks.music.player:id/previous" to="previous">

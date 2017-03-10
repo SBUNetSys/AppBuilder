@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Card style="default">
+    <Title from="android:id/text1" to="title">
+        <text>Song</text>
+    </Title>
+    <Description from="android:id/text2" to="text">
+        <text>Channel</text>
+    </Description>
+    <Icon from="com.clearchannel.iheartradio.controller:id/playPauseProgress" to="icon">
+        <image>player_play.png</image>
+    </Icon>
+    <Background from="com.clearchannel.iheartradio.controller:id/player_image_switcher" to="card">
+        <image>icon_default.png</image>
+    </Background>
+</Card>

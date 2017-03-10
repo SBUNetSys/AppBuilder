@@ -120,7 +120,7 @@ public class AppBuilderMain {
             System.out.println();
         }
         appPkgNames.clear();
-        appPkgNames.add("com.apps4you.spraycan");
+        appPkgNames.add("com.endomondo.android");
 
         for (String pkgName : appPkgNames) {
             stringMap.clear();

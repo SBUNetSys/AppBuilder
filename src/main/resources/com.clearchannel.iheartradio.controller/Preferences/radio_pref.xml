@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<nodes>
+  <node>
+    <id>com.clearchannel.iheartradio.controller:id/player_image_switcher</id>
+    <rect>90 288 990 1080</rect>
+  </node>
+  <node>
+    <id>com.clearchannel.iheartradio.controller:id/playPauseProgress</id>
+    <rect>462 1500 618 1656</rect>
+  </node>
+  <node>
+    <id>android:id/text1</id>
+    <rect>90 1275 357 1348</rect>
+  </node>
+  <node>
+    <id>android:id/text2</id>
+    <rect>90 1348 259 1413</rect>
+  </node>
+</nodes>
